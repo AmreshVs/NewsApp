@@ -1,20 +1,28 @@
 import React from 'react';
 import { Button, Layout, Text } from '@ui-kitten/components';
-import { ThemeContext } from '../../theme/themeContext';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const Main = ({ navigation }) => {
 
-  const themeContext = React.useContext(ThemeContext);
+  React.useLayoutEffect(() => {
+    checkUserLogin();
+  }, []);
 
-  const navigateDetails = () => {
-    navigation.navigate('Details');
-  };
+  const checkUserLogin = async () => {
+    const userData = await AsyncStorage.getItem('@ValarTamil:userData');
+    if (userData !== null) {
+      // navigation.navigate('Home');
+    }
+    else {
+      navigation.navigate('Login');
+    }
+  }
 
   return (
     <>
       <Layout style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Button style={{ marginVertical: 4 }} onPress={navigateDetails}>OPEN DETAILS</Button>
-        <Button style={{ marginVertical: 4 }} onPress={themeContext.toggleTheme}>TOGGLE THEME</Button>
+        <Button style={{ marginVertical: 4 }} onPress={() => navigation.navigate('Login')}>Login</Button>
+        <Button style={{ marginVertical: 4 }}>TOGGLE THEME</Button>
       </Layout>
     </>
   );

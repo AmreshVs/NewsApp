@@ -1,4 +1,4 @@
-import { USER_LOGIN, SNACKBAR_MESSAGE } from '../actionCreators/commonAC';
+import { USER_LOGIN, SNACKBAR_MESSAGE } from '@redux/actionCreators/commonAC';
 
 const initialState = {
   userData: {},

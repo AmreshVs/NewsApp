@@ -1,0 +1,19 @@
+{
+  "login": {
+    "welcome_back": "Welcome Back!",
+    "caption": "Login to your existing account to explore benefits",
+    "mobile_number": "Mobile Number",
+    "resend_Otp": "Resend OTP",
+    "resend_in": "Resend OTP in ",
+    "login": "Login",
+    "get_otp": "Get OTP",
+    "no_account": "Don't have an account?",
+    "signup": "Signup"
+  },
+  "signup":{
+    "heading": "To get Started",
+    "caption": "Create an account with Valar Tamil to get all features",
+    "name": "Name",
+    "citystate": "City"
+  }
+}
