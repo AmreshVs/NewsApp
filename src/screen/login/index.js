@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Image, View } from 'react-native';
 import { Layout, Text, useStyleSheet, Button, Spinner } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -12,8 +14,10 @@ import RoundedTextBox from '@comp/roundedTextBox';
 import snackBar from '@common/snackBar';
 import mobileValidation from '@common/mobileValidation';
 import LoginApi from '@api/login';
+import { setUserData } from '@redux/actions/commonActions';
 
-const Login = ({navigation}) => {
+const Login = (props) => {
+
   const styles = useStyleSheet(themedStyle);
   const [state, setState] = React.useState({
     input1: '',
@@ -26,22 +30,24 @@ const Login = ({navigation}) => {
   const [otpClick, setOtpClick] = React.useState(false);
 
   const handleOtpSend = async () => {
+    // Validate the mobile number and then proceed
     if(mobileValidation(mobile)){
       setLoading(true);
-      let otp = Number(state.input1 + state.input2 + state.input3 + state.input4);
-      let response = otp.toString().length > 0 ? await LoginApi({mobile: mobile, otp: otp}) : await LoginApi({mobile: mobile});
+      let otp = `${state.input1}${state.input2}${state.input3}${state.input4}`;
+      // API call based on OTP
+      let response = otp.length > 0 ? await LoginApi({mobile: mobile, otp: otp}) : await LoginApi({mobile: mobile, autoOtpHash: props.autoOtpHash});
       setLoading(false);
       setOtpClick(true);
       if(response.message !== 'Login Success'){
         snackBar(response.message);  
       }
+      // If login Success save it to store and save on Asyncstorage for later login
       if(response.message === 'Login Success'){
+        await props.setUserData(response.data);
         await AsyncStorage.setItem('@ValarTamil:userData', JSON.stringify(response.data));
-        setMobile('');
-        setState({input1: '',input2: '',input3: '',input4: ''});
       }
-      if(otp.toString().length > 0 && response.message === 'Login Success'){
-        navigation.navigate('Main');
+      if(otp.length > 0 && response.message === 'Login Success'){
+        props.navigation.navigate('Main');
       }
     }
   }
@@ -54,6 +60,7 @@ const Login = ({navigation}) => {
     setState({ ...state, ['input' + id]: text});
   }
 
+  // Add Country code to first number charcter
   const handleMobileText = (text) => {
     if(text.length === 1 && !text.includes('+')){
       setMobile('+91' + text);
@@ -79,11 +86,13 @@ const Login = ({navigation}) => {
       <Text category='h2'>{Lang('login.welcome_back')}</Text>
       <Text appearance='hint'>{Lang('login.caption')}</Text>
       <View style={styles.inputContainer}>
+        {/* Mobile */}
         <RoundedTextBox size='large' value={mobile} onChangeText={handleMobileText} placeholder={Lang('login.mobile_number')} keyboardType='phone-pad' accessory='left' icon='smartphone-outline' />
+        {/* OTP */}
         {otpClick ? 
           <>
             <OtpInput value={state} setAutoOtp={handleAutoOtp} setOtp={handleSetOtp} disabled={!otpClick} />
-            <ResendOtp/> 
+            <ResendOtp mobile={mobile} /> 
           </>
         : null}
         <Button style={[styles.button, {marginTop: !otpClick ? 20 : 5}]} appearance='filled' onPress={handleOtpSend} disabled={mobile.length >= 10 ? false : true} accessoryLeft={loading === true ? LoadingIndicator : null}>
@@ -92,7 +101,7 @@ const Login = ({navigation}) => {
       </View>
       <View style={styles.signupContainer}>
         <Text>{Lang('login.no_account')} </Text>
-        <Text style={styles.signupText} status='primary' onPress={() => navigation.navigate('Signup')}>
+        <Text style={styles.signupText} status='primary' onPress={() => props.navigation.navigate('Signup')}>
           {Lang('login.signup')}
         </Text>
       </View>
@@ -100,4 +109,10 @@ const Login = ({navigation}) => {
   )
 }
 
-export default Login;
+const mapStateToProps = (state) => state.common;
+
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ setUserData: setUserData }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

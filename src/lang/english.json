@@ -13,7 +13,10 @@
   "signup":{
     "heading": "To get Started",
     "caption": "Create an account with Valar Tamil to get all features",
-    "name": "Name",
-    "citystate": "City"
+    "fullname": "Full Name",
+    "citystate": "City",
+    "enterOtp": "Please enter OTP",
+    "cityStateNoMatch" : "City & State does not match our records!",
+    "have_account": "Already have an account?"
   }
 }

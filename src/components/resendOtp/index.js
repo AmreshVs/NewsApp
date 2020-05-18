@@ -1,13 +1,19 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { Text, Button } from '@ui-kitten/components';
 import CountDown from 'react-native-countdown-component';
 
-const ResendOtp = () => {
+import SendOtp from '@api/sendOtp';
+import snackBar from '@common/snackBar';
 
+const ResendOtp = (props) => {
+  
   const [resend, setResend] =  React.useState(false);
-
-  const handleResendOtp = () => {
+  
+  const handleResendOtp = async () => {
+    const response = await SendOtp({mobile: props.mobile, autoOtpHash: props.autoOtpHash});
+    snackBar(response.message);
     setResend(false);
   }
 
@@ -35,7 +41,9 @@ const ResendOtp = () => {
   )
 }
 
-export default ResendOtp;
+const mapStateToProps = (state) => state.common;
+
+export default connect(mapStateToProps)(ResendOtp);
 
 const styles = StyleSheet.create({
   countDownContainer:{

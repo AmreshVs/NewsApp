@@ -1,15 +1,16 @@
-import { USER_LOGIN, SNACKBAR_MESSAGE } from '@redux/actionCreators/commonAC';
+import { USER_DATA, AUTO_OTP_HASH } from '@redux/actionCreators/commonAC';
 
-export const userLogin = (payload) => {
+export const setUserData = (payload) => {
   return {
-    type: USER_LOGIN,
+    type: USER_DATA,
     payload
   };
 };
 
-export const snackMessage = (payload) => {
+
+export const setAutoOtpHash = (payload) => {
   return {
-    type: SNACKBAR_MESSAGE,
+    type: AUTO_OTP_HASH,
     payload
   };
 };

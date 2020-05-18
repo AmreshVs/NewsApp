@@ -1,17 +1,17 @@
-import { USER_LOGIN, SNACKBAR_MESSAGE } from '@redux/actionCreators/commonAC';
+import { USER_DATA, AUTO_OTP_HASH } from '@redux/actionCreators/commonAC';
 
 const initialState = {
   userData: {},
-  snackbar: { visible: false, message: '' },
-  theme: 'light'
+  theme: 'light',
+  autoOtpHash: ''
 };
 
 const CommonDataReducer = (state = initialState, action) => {
   switch (action.type) {
-    case USER_LOGIN:
+    case USER_DATA:
       return Object.assign({}, state, { userData: action.payload });
-    case SNACKBAR_MESSAGE:
-      return Object.assign({}, state, { snackbar: action.payload });
+    case AUTO_OTP_HASH:
+      return {...state, autoOtpHash: action.payload };
     default:
       return state;
   }

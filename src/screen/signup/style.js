@@ -1,10 +1,20 @@
 import { StyleService } from '@ui-kitten/components';
 
 const themedStyle = StyleService.create({
-  root:{
+  layout:{
     height: '100%',
+  },
+  root:{
+    height: '90%',
     alignItems: 'center',
-    justifyContent: 'center'
+    // justifyContent: 'center',
+    // backgroundColor: 'red'
+  },
+  logo:{
+    width: 70,
+    height: 70,
+    marginTop: 10,
+    marginBottom: 10
   },
   inputContainer:{
     paddingTop: 20,
