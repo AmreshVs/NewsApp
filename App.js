@@ -9,6 +9,7 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { default as lightTheme } from '@theme/light.json';
 import {default as darkTheme} from '@theme/dark.json';
+import { navigationRef, isMountedRef } from '@routes/outsideRoute';
 import store from '@redux/stores';
 import Routes from '@routes';
 
@@ -16,13 +17,19 @@ const App = () => {
   const state = store.getState();
   const theme = state.common.theme;
 
+  // Handling Reference Mount
+  React.useEffect(() => {
+    StatusBar.setHidden(true);
+    isMountedRef.current = true;
+    return () => (isMountedRef.current = false);
+  }, []);
+
   return (
     <>
       <Provider store={store}>
         <IconRegistry icons={EvaIconsPack} />
         <ApplicationProvider mapping={mapping} theme={theme === 'light' ? lightTheme : darkTheme}>
-          <NavigationContainer>
-            <StatusBar hidden={true} />
+          <NavigationContainer ref={navigationRef}>
             <Routes/>
           </NavigationContainer>
         </ApplicationProvider>
