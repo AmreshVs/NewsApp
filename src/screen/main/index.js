@@ -5,10 +5,13 @@ import { bindActionCreators } from 'redux';
 import { Layout } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-community/async-storage';
 import RNOtpVerify from 'react-native-otp-verify';
+import axios from 'axios';
 
 import { setAutoOtpHash } from '@redux/actions/commonActions'
+import { setUserData } from '@redux/actions/commonActions';
 
 const Main = (props) => {
+
   React.useEffect(() => {
     RNOtpVerify.getHash()
     .then((hash) => {
@@ -20,6 +23,8 @@ const Main = (props) => {
   const checkUserLogin = async () => {
     const userData = await AsyncStorage.getItem('@ValarTamil:userData');
     if (userData !== null) {
+      axios.defaults.headers.common['Authorization'] = JSON.parse(userData).token;
+      await props.setUserData(JSON.parse(userData));
       props.navigation.navigate('Home');
     }
     else {
@@ -39,7 +44,7 @@ const Main = (props) => {
 const mapStateToProps = (state) => state.common;
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ setAutoOtpHash: setAutoOtpHash }, dispatch);
+  return bindActionCreators({ setAutoOtpHash: setAutoOtpHash, setUserData: setUserData }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

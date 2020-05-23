@@ -5,6 +5,7 @@ import { View, Image } from 'react-native';
 import { Layout, Text, useStyleSheet, Button, Spinner, Icon } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Autocomplete, AutocompleteItem } from '@ui-kitten/components';
+import axios from 'axios';
 
 import Lang from '@lang'
 import themedStyle from './style';
@@ -13,7 +14,8 @@ import ResendOtp from '@comp/resendOtp'
 import RoundedTextBox from '@comp/roundedTextBox';
 import snackBar from '@common/snackBar';
 import mobileValidation from '@common/mobileValidation';
-import SignupApi from '@api/signup';
+import { SIGNUP } from '@api';
+import { useAxios } from '@hooks';
 import { CityStateData } from '@const/cityState';
 import TopNav from '@comp/topNav';
 import { setUserData } from '@redux/actions/commonActions';
@@ -98,7 +100,7 @@ const Signup = (props) => {
       if (validateOtp() === true) {
         setLoading(true);
         // API call based on OTP and Non OTP
-        const response = otp.length > 0 ? await SignupApi({ fullname: fullname, citystate: cityState, mobile: mobile, otp: otp }) : await SignupApi({ fullname: fullname, citystate: cityState, mobile: mobile, autoOtpHash: props.autoOtpHash });
+        const response = otp.length > 0 ? await useAxios(SIGNUP, { fullname: fullname, citystate: cityState, mobile: mobile, otp: otp }) : await useAxios(SIGNUP, { fullname: fullname, citystate: cityState, mobile: mobile, autoOtpHash: props.autoOtpHash });
         setOtpClick(true);
         snackBar(response.message);
         setLoading(false);
@@ -109,6 +111,7 @@ const Signup = (props) => {
         if (response.message === 'Signup Success') {
           await props.setUserData(response.data);
           await AsyncStorage.setItem('@ValarTamil:userData', JSON.stringify(response.data));
+          axios.defaults.headers.common['Authorization'] = response.data.token;
         }
         if (otp.length > 0 && response.message === 'Signup Success') {
           props.navigation.navigate('Main');

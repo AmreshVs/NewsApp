@@ -9,9 +9,9 @@ const initialState = {
 const CommonDataReducer = (state = initialState, action) => {
   switch (action.type) {
     case USER_DATA:
-      return Object.assign({}, state, { userData: action.payload });
+      return { ...state, userData: action.payload };
     case AUTO_OTP_HASH:
-      return {...state, autoOtpHash: action.payload };
+      return { ...state, autoOtpHash: action.payload };
     default:
       return state;
   }

@@ -19,12 +19,12 @@ const OtpInput = (props) => {
             }
           }
           catch(error){
-            console.log('error', error);
+            // console.log('error', error);
           }
         })
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       })
 
       return () => {

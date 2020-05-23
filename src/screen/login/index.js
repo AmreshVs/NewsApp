@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { Image, View } from 'react-native';
 import { Layout, Text, useStyleSheet, Button, Spinner } from '@ui-kitten/components';
 import AsyncStorage from '@react-native-community/async-storage';
+import axios from 'axios';
 
 import StatusBar from '@comp/statusbar';
 import OtpInput from '@comp/otpInput';
@@ -13,7 +14,8 @@ import themedStyle from './style';
 import RoundedTextBox from '@comp/roundedTextBox';
 import snackBar from '@common/snackBar';
 import mobileValidation from '@common/mobileValidation';
-import LoginApi from '@api/login';
+import { useAxios } from '@hooks';
+import { LOGIN } from '@api';
 import { setUserData } from '@redux/actions/commonActions';
 
 const Login = (props) => {
@@ -35,7 +37,7 @@ const Login = (props) => {
       setLoading(true);
       let otp = `${state.input1}${state.input2}${state.input3}${state.input4}`;
       // API call based on OTP
-      let response = otp.length > 0 ? await LoginApi({mobile: mobile, otp: otp}) : await LoginApi({mobile: mobile, autoOtpHash: props.autoOtpHash});
+      let response = otp.length > 0 ? await useAxios(LOGIN, {mobile: mobile, otp: otp}) : await useAxios(LOGIN, {mobile: mobile, autoOtpHash: props.autoOtpHash});
       setLoading(false);
       setOtpClick(true);
       if(response.message !== 'Login Success'){
@@ -45,6 +47,7 @@ const Login = (props) => {
       if(response.message === 'Login Success'){
         await props.setUserData(response.data);
         await AsyncStorage.setItem('@ValarTamil:userData', JSON.stringify(response.data));
+        axios.defaults.headers.common['Authorization'] = response.data.token;
       }
       if(otp.length > 0 && response.message === 'Login Success'){
         props.navigation.navigate('Main');

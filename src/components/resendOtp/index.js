@@ -4,7 +4,8 @@ import { View, StyleSheet } from 'react-native';
 import { Text, Button } from '@ui-kitten/components';
 import CountDown from 'react-native-countdown-component';
 
-import SendOtp from '@api/sendOtp';
+import { SEND_OTP } from '@api';
+import { useAxios } from '@hooks';
 import snackBar from '@common/snackBar';
 
 const ResendOtp = (props) => {
@@ -12,7 +13,7 @@ const ResendOtp = (props) => {
   const [resend, setResend] =  React.useState(false);
   
   const handleResendOtp = async () => {
-    const response = await SendOtp({mobile: props.mobile, autoOtpHash: props.autoOtpHash});
+    const response = await useAxios(SEND_OTP, {mobile: props.mobile, autoOtpHash: props.autoOtpHash});
     snackBar(response.message);
     setResend(false);
   }

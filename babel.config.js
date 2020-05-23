@@ -44,6 +44,10 @@ module.exports = {
           {
             rootPathPrefix: '@api',
             rootPathSuffix: 'src/api'
+          },
+          {
+            rootPathPrefix: '@hooks',
+            rootPathSuffix: 'src/hooks'
           }
         ]
       }
@@ -95,6 +99,10 @@ module.exports = {
               {
                 rootPathPrefix: '@api',
                 rootPathSuffix: 'src/api'
+              },
+              {
+                rootPathPrefix: '@hooks',
+                rootPathSuffix: 'src/hooks'
               }
             ]
           }
