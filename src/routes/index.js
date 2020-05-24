@@ -5,6 +5,7 @@ import Main from '@screen/main';
 import Login from '@screen/login';
 import Signup from '@screen/signup';
 import Home from '@screen/home';
+import Test from '@screen/test';
 import VerticalFullScreenVideo from '@screen/verticalFullScreenVideo';
 
 const Stack = createStackNavigator();
@@ -17,6 +18,7 @@ const Routes = () => {
       <Stack.Screen name="Signup" component={Signup} />
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="VerticalFullScreenVideo" component={VerticalFullScreenVideo} />
+      <Stack.Screen name="Test" component={Test} />
     </Stack.Navigator>
   )
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Image } from 'react-native';
 import { StyleService, useStyleSheet, Text, Divider, Icon } from '@ui-kitten/components';
-import Video from 'react-native-af-video-player';
+import VideoPlayer from '@comp/video';
 import { Viewport } from '@skele/components'
 
 import PostedTime from '@common/postedTime';
@@ -15,23 +15,30 @@ const VideoBig = (props) => {
   const ViewportAwareView = Viewport.Aware(View);
 
   const playVideo = () => {
-    if (videoRef.play !== undefined) {
-      // setVideoControl(true);
-      // videoRef.play();
+    if(videoControl === false){
+      setVideoControl(true);
+    }
+    if (videoRef.playPause !== undefined) {
+      videoRef.playPause();
     }
   }
 
   const pauseVideo = () => {
-    if (videoRef.pause !== undefined) {
+    if (videoRef.playPause !== undefined) {
       // setVideoControl(false);
-      // videoRef.pause();
+      videoRef.playPause();
     }
   }
 
   return (
-    <View style={styles.container}>
-      <ViewportAwareView onViewportEnter={playVideo} onViewportLeave={pauseVideo}>
-        <Video style={styles.video} ref={(ref) => videoRef = ref} url={props.url} placeholder={props.featured_img} inlineOnly />
+    <View style={styles.container} key={props.id}>
+      <ViewportAwareView onViewportEnter={playVideo} /*onViewportLeave={pauseVideo}*/>
+        {videoControl === false 
+          ? 
+            <Image source={{uri: props.featured_img}} style={styles.video} />
+          :
+            <VideoPlayer style={styles.video} url={props.url} featured_img={props.featured_img} inlineOnly />
+        }
       </ViewportAwareView>
       <Text category='p1' style={styles.title}>{props.id + ' ' + props.title}</Text>
       <View style={styles.bottomContainer}>

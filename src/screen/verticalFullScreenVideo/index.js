@@ -1,7 +1,7 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { useStyleSheet } from '@ui-kitten/components';
-import Video from 'react-native-af-video-player';
+// import Video from 'react-native-af-video-player';
 
 import themedStyle from './style';
 
