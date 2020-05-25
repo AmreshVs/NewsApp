@@ -1,52 +1,29 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Layout, useStyleSheet, Text } from '@ui-kitten/components';
-import { Viewport } from '@skele/components';
 import { FlatList } from 'react-native';
+import _ from 'lodash';
 
 import NewsItems from '@comp/home/newsItems';
 import themedStyle from './style';
-import { ScrollView } from 'react-native';
-import { HOME } from '@api';
 import { useAxios } from '@hooks';
 import { API_URL } from '@const';
 
-const Home = (props) => {
+const Home = () => {
   const styles = useStyleSheet(themedStyle);
   const [state, setState] = React.useState([]);
-  const [refresh, setRefresh] = React.useState(false);
+  const [refresh, setRefresh] = React.useState(true);
   const [page, setPage] = React.useState(1);
 
   React.useEffect(() => {
-    async function loadData() {
-      if (page > 0) {
-        var AllNews = [];
-        const response = await useAxios({ url: `${API_URL}/home?page=${page}&size=5` });
-        for (let key in response.data) {
-          response.data[key].forEach((item) => {
-            AllNews.push(item);
-          })
-        }
-        setPage(page + 1);
-        setState(AllNews);
-      }
-    }
-    loadData();
+    loadMore();
   }, []);
-  console.log(page);
+
   const loadMore = async () => {
     if (page > 0) {
-      let AllNews = state;
       setRefresh(true);
-      const response = await useAxios({ url: `${API_URL}/home?page=${page}&size=10` });
-      console.log('loadMore')
-      for (let key in response.data) {
-        response.data[key].forEach((item) => {
-          AllNews.push(item);
-        })
-      }
+      const response = await useAxios({ url: `${API_URL}/latest-news?page=${page}&size=10` });
       setPage(page + 1);
-      setState(AllNews);
+      setState([...state, ...response.data]);
       setRefresh(false);
       if (response.pagination.nextPageUrl === '') {
         setPage(-1);
@@ -56,22 +33,20 @@ const Home = (props) => {
 
   return (
     <Layout level='2'>
-      <Viewport.Tracker>
-        <FlatList
-          data={state}
-          style={styles.container}
-          onEndReachedThreshold={1}
-          refreshing={refresh}
-          onRefresh={loadMore}
-          onEndReached={loadMore}
-          renderItem={({ item, index }) => NewsItems(item, index)}
-          keyExtractor={(item, index) => index.toString()}
-        />
-    </Viewport.Tracker>
-      </Layout>
+      <FlatList
+        data={state}
+        style={styles.container}
+        onEndReachedThreshold={1}
+        refreshing={refresh}
+        onRefresh={loadMore}
+        onEndReached={loadMore}
+        renderItem={({ item, index }) => <NewsItems item={item} index={index} />}
+        keyExtractor={(item, index) => index.toString()}
+        windowSize={10}
+        initialNumToRender={10}
+      />
+    </Layout>
   )
 }
 
-const mapStateToProps = state => state.common;
-
-export default connect(mapStateToProps)(Home);
+export default Home;

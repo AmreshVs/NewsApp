@@ -1,8 +1,8 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { useStyleSheet } from '@ui-kitten/components';
-// import Video from 'react-native-af-video-player';
 
+import VideoPlayer from '@comp/video';
 import themedStyle from './style';
 
 const LiveVideo = ({route}) => {
@@ -15,7 +15,7 @@ const LiveVideo = ({route}) => {
   })
 
   return (
-    <Video style={styles.videoPlayer} /*theme={styles.theme}*/ url={url} title='Live' autoPlay hideFullScreenControl={true} />
+    <VideoPlayer style={styles.videoPlayer} url={url} playPause={true} fullscreen inlineOnly />
   )
 }
 

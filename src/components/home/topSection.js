@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { useStyleSheet, StyleService, Icon } from '@ui-kitten/components';
+import { useStyleSheet, StyleService, Icon, Text } from '@ui-kitten/components';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from '@react-navigation/core';
 
@@ -16,8 +16,9 @@ const TopSection = (props) => {
   return (
     <View style={styles.header}>
       <Ripple style={styles.col1} onPress={handleVideo}>
+        <Text category='label' style={styles.live}>Live</Text>
         <View style={styles.iconContainer}>
-          <Icon style={styles.icon} name='play-circle' fill={styles.iconColor.color} />
+          <Icon style={styles.icon} name='arrow-right' fill={styles.iconColor.color} />
         </View>
         <Image style={styles.videoThumb} source={{ uri: 'https://embedwistia-a.akamaihd.net/deliveries/d9a36bc6ec0f34ae59a48f6082c5351d908a341d.webp?image_crop_resized=1078x1980' }} />
       </Ripple>
@@ -46,7 +47,7 @@ const themedStyle = StyleService.create({
   header:{
     width: '100%',
     flexDirection: 'row',
-    marginBottom: 20
+    marginBottom: 15
   },
   col1:{
     width: '50%',
@@ -80,11 +81,12 @@ const themedStyle = StyleService.create({
     borderColor: 'border-basic-color-4',
     marginVertical: 5,
     borderRadius: 10,
-    alignItems: 'center'
+    alignItems: 'center',
+    backgroundColor: 'background-basic-color-1'
   },
   icon:{
-    width: 60,
-    height: 60,
+    width: 45,
+    height: 45,
   },
   iconContainer: {
     position: 'absolute',
@@ -98,5 +100,16 @@ const themedStyle = StyleService.create({
   },
   iconColor:{
     color: 'color-basic-100'
+  },
+  live:{
+    position: 'absolute',
+    color: 'white',
+    top: 10,
+    right: 15,
+    padding: 3,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    backgroundColor: 'red',
+    zIndex: 2,
   }
 });

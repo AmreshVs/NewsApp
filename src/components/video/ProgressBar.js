@@ -8,12 +8,13 @@ export const ProgressBar = ({
   onSlideCapture,
   onSlideStart,
   onSlideComplete,
+  fullscreen
 }) => {
   const position = getMinutesFromSeconds(currentTime);
   const fullDuration = getMinutesFromSeconds(duration);
 
   return (
-    <View style={styles.wrapper}>
+    <View style={fullscreen ? styles.wrapperFullscreen : styles.wrapper}>
       <Slider
         value={currentTime}
         minimumValue={0}
@@ -50,6 +51,12 @@ export const ProgressBar = ({
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
+  },
+  wrapperFullscreen: {
+    flex: 1,
+    bottom: 10,
+    marginHorizontal: 10,
+    justifyContent: 'flex-end',
   },
   timeWrapper: {
     flexDirection: 'row',

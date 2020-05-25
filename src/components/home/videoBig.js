@@ -2,44 +2,33 @@ import React from 'react';
 import { View, Image } from 'react-native';
 import { StyleService, useStyleSheet, Text, Divider, Icon } from '@ui-kitten/components';
 import VideoPlayer from '@comp/video';
-import { Viewport } from '@skele/components'
 
 import PostedTime from '@common/postedTime';
 
 const VideoBig = (props) => {
 
-  var videoRef = React.useRef(null);
   const [videoControl, setVideoControl] = React.useState(false);
   const styles = useStyleSheet(themedStyle);
 
-  const ViewportAwareView = Viewport.Aware(View);
-
-  const playVideo = () => {
-    if(videoControl === false){
+  const loadVideo = () => {
+    if (videoControl === false) {
       setVideoControl(true);
-    }
-    if (videoRef.playPause !== undefined) {
-      videoRef.playPause();
-    }
-  }
-
-  const pauseVideo = () => {
-    if (videoRef.playPause !== undefined) {
-      // setVideoControl(false);
-      videoRef.playPause();
     }
   }
 
   return (
     <View style={styles.container} key={props.id}>
-      <ViewportAwareView onViewportEnter={playVideo} /*onViewportLeave={pauseVideo}*/>
-        {videoControl === false 
-          ? 
-            <Image source={{uri: props.featured_img}} style={styles.video} />
-          :
-            <VideoPlayer style={styles.video} url={props.url} featured_img={props.featured_img} inlineOnly />
-        }
-      </ViewportAwareView>
+      {videoControl === false
+        ?
+        <>
+          <View style={styles.playContainer}>
+            <Icon style={styles.playIcon} fill='#FFF' name='arrow-right' onPress={loadVideo} />
+          </View>
+          <Image source={{ uri: props.featured_img }} style={styles.video} />
+        </>
+        :
+        <VideoPlayer style={styles.video} url={props.url} featured_img={props.featured_img} playPause={videoControl} inlineOnly />
+      }
       <Text category='p1' style={styles.title}>{props.id + ' ' + props.title}</Text>
       <View style={styles.bottomContainer}>
         <View style={styles.iconContainer}>
@@ -90,5 +79,18 @@ const themedStyle = StyleService.create({
   divider: {
     marginTop: 15,
     marginBottom: 15
+  },
+  playIcon: {
+    width: 30,
+    height: 30,
+    padding: 20
+  },
+  playContainer: {
+    position: 'absolute',
+    zIndex: 1,
+    width: '100%',
+    height: 220,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 });

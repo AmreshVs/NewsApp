@@ -13,8 +13,8 @@ const VideoPlayer = (props) => {
 
   let videoRef = React.useRef();
   const [state, setState] = useState({
-    fullscreen: false,
-    play: false,
+    fullscreen: props.fullscreen || false,
+    play: props.playPause,
     currentTime: 0,
     duration: 0,
     showControls: true,
@@ -74,6 +74,7 @@ const VideoPlayer = (props) => {
                       skipForwards={skipForward}
                     />
                     <ProgressBar
+                      fullscreen={props.fullscreen || false}
                       currentTime={state.currentTime}
                       duration={state.duration > 0 ? state.duration : 0}
                       onSlideStart={handlePlayPause}
@@ -105,6 +106,7 @@ const VideoPlayer = (props) => {
     // If playing, pause and show controls immediately.
     if (state.play) {
       setState({ ...state, play: false, showControls: true });
+      setTimeout(() => setState(s => ({ ...s, showControls: false })), 2000);
       return;
     }
 
@@ -134,6 +136,7 @@ const VideoPlayer = (props) => {
       currentTime: data.currentTime,
       loading: false
     }));
+    setTimeout(() => setState(s => ({ ...s, showControls: false })), 2000);
   }
 
   function onProgress(data) {
@@ -159,7 +162,7 @@ const VideoPlayer = (props) => {
 
 };
 
-export default VideoPlayer;
+export default React.memo(VideoPlayer);
 
 
 const styles = StyleSheet.create({

@@ -15,7 +15,10 @@ export const SEND_OTP = {
   method: 'POST'
 }
 
-export const HOME = {
-    url: `${API_URL}/home?page=1&size=10`,
-    method: 'GET',
-  }
+export const LATEST_NEWS = {
+  url: `${API_URL}/latest-news?page=1&size=10`,
+}
+
+export const TOP_SECTION = {
+  url: `${API_URL}/top-section`,
+}
