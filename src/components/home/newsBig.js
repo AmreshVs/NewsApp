@@ -4,22 +4,22 @@ import { StyleService, useStyleSheet, Text, Divider, Icon } from '@ui-kitten/com
 
 import PostedTime from '@common/postedTime';
 
-const NewsBig = (props) => {
+const NewsBig = ({data}) => {
 
   const styles = useStyleSheet(themedStyle);
  
   return (
     <>
       <View style={styles.container}>
-        <Image style={styles.image} source={{ uri: props.featured_img }} />
-        <Text category='p1' style={styles.title}>{props.id + ' ' + props.title}</Text>
+        <Image style={styles.image} source={{ uri: data.featured_img }} />
+        <Text category='p1' style={styles.title}>{data.id + ' ' + data.title}</Text>
         <View style={styles.bottomContainer}>
           <View style={styles.iconContainer}>
             <Icon style={styles.icon} fill={styles.icon.color} name='globe-2-outline' />
-            <Text style={styles.caption}>{PostedTime(props.posted_on)}</Text>
+            <Text style={styles.caption}>{PostedTime(data.posted_on)}</Text>
           </View>
           <View>
-            <Text style={styles.caption}>12 Comments</Text>
+            <Text style={styles.caption}>{data.comments} Comments</Text>
           </View>
         </View>
         <Divider style={styles.divider} />

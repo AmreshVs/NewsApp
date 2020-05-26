@@ -1,11 +1,12 @@
 import React from 'react';
 import { View, Image, ScrollView } from 'react-native';
-import { StyleService, useStyleSheet, Text, Divider } from '@ui-kitten/components';
+import { StyleService, useStyleSheet, Text, Divider, Spinner } from '@ui-kitten/components';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from '@react-navigation/native';
 
 import { useAxios } from '@hooks';
 import { TOP_SECTION } from '@api';
+import Lang from '@lang';
 
 const TodayPdf = () => {
 
@@ -13,10 +14,14 @@ const TodayPdf = () => {
   const styles = useStyleSheet(themedStyle);
   const [data, setData] = React.useState([]);
 
-  React.useEffect(async () => {
+  React.useEffect(() => {
+    loadData();
+  }, []);
+
+  const loadData = async () => {
     const response = await useAxios(TOP_SECTION);
     setData(response.todayPdf);
-  }, []);
+  }
 
   const handleNavigate = (url) => {
     navigation.navigate('PDFViewer', { url: url });
@@ -24,16 +29,22 @@ const TodayPdf = () => {
 
   return (
     <>
-      <Text category='h6' style={styles.heading}>Today's PDF</Text>
-      <ScrollView horizontal={true}>
-        {Object.keys(data).length > 0 && data.map((item) => {
-          return (
-            <Ripple style={styles.container} onPress={() => handleNavigate(item.url)}>
-              <Image style={styles.image} source={{ uri: item.featured_img }} />
-            </Ripple>
-          )
-        })}
-      </ScrollView>
+      <Text category='h6' style={styles.heading}>{Lang('home.today_pdf')}</Text>
+      {data.length <= 0 ?
+        <View style={styles.spinnerContainer}>
+          <Spinner />
+        </View>
+        :
+        <ScrollView horizontal={true}>
+          {Object.keys(data).length > 0 && data.map((item) => {
+            return (
+              <Ripple style={styles.container} onPress={() => handleNavigate(item.url)}>
+                <Image style={styles.image} source={{ uri: item.featured_img }} />
+              </Ripple>
+            )
+          })}
+        </ScrollView>
+      }
       <Divider style={styles.divider} />
     </>
   )
@@ -63,5 +74,10 @@ const themedStyle = StyleService.create({
   divider: {
     marginTop: 5,
     marginBottom: 5
+  },
+  spinnerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 200
   }
 });

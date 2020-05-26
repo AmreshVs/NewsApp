@@ -28,7 +28,7 @@ const App = () => {
     <>
       <Provider store={store}>
         <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider mapping={mapping} theme={theme === 'light' ? lightTheme : darkTheme}>
+        <ApplicationProvider mapping={mapping} theme={theme === 'dark' ? lightTheme : darkTheme}>
           <NavigationContainer ref={navigationRef}>
             <Routes/>
           </NavigationContainer>

@@ -8,6 +8,7 @@ import VideoBig from '@comp/home/videoBig';
 import Statusbar from '@comp/statusbar';
 import TopSection from '@comp/home/topSection';
 import TodayPdf from '@comp/home/todayPdf';
+import Lang from '@lang';
 
 const NewsItems = ({ item, index }) => {
 
@@ -18,7 +19,7 @@ const NewsItems = ({ item, index }) => {
           <Statusbar />
           <TopSection />
           <TodayPdf />
-          <Text category='h6' style={styles.heading}>Latest News</Text>
+          <Text category='h6' style={styles.heading}>{Lang('home.latest_news')}</Text>
         </>
       )
     }
@@ -31,19 +32,19 @@ const NewsItems = ({ item, index }) => {
       ?
       <>
         <Top />
-        <NewsBig key={item.id} id={item.id} title={item.title} featured_img={item.featured_img} posted_on={item.posted_on} />
+        <NewsBig key={item.id} data={item} />
       </>
       :
       <>
         <Top />
-        <NewsSmall key={item.id} id={item.id} title={item.title} featured_img={item.featured_img} posted_on={item.posted_on} />
+        <NewsSmall key={item.id} data={item} />
       </>
   }
   else {
     return (
       <>
         <Top />
-        <VideoBig key={item.id} id={item.id} title={item.title} url={item.url} featured_img={item.featured_img} posted_on={item.posted_on} />
+        <VideoBig key={item.id} data={item} />
       </>
     )
   }

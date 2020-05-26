@@ -25,7 +25,7 @@ const Main = (props) => {
     if (userData !== null) {
       axios.defaults.headers.common['Authorization'] = JSON.parse(userData).token;
       await props.setUserData(JSON.parse(userData));
-      props.navigation.navigate('Home');
+      props.navigation.navigate('NewsDetail');
     }
     else {
       props.navigation.navigate('Login');

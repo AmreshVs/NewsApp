@@ -5,7 +5,7 @@ import VideoPlayer from '@comp/video';
 
 import PostedTime from '@common/postedTime';
 
-const VideoBig = (props) => {
+const VideoBig = ({data}) => {
 
   const [videoControl, setVideoControl] = React.useState(false);
   const styles = useStyleSheet(themedStyle);
@@ -17,26 +17,26 @@ const VideoBig = (props) => {
   }
 
   return (
-    <View style={styles.container} key={props.id}>
+    <View style={styles.container} key={data.id}>
       {videoControl === false
         ?
         <>
           <View style={styles.playContainer}>
             <Icon style={styles.playIcon} fill='#FFF' name='arrow-right' onPress={loadVideo} />
           </View>
-          <Image source={{ uri: props.featured_img }} style={styles.video} />
+          <Image source={{ uri: data.featured_img }} style={styles.video} />
         </>
         :
-        <VideoPlayer style={styles.video} url={props.url} featured_img={props.featured_img} playPause={videoControl} inlineOnly />
+        <VideoPlayer style={styles.video} url={data.url} featured_img={data.featured_img} playPause={videoControl} inlineOnly />
       }
-      <Text category='p1' style={styles.title}>{props.id + ' ' + props.title}</Text>
+      <Text category='p1' style={styles.title}>{data.id + ' ' + data.title}</Text>
       <View style={styles.bottomContainer}>
         <View style={styles.iconContainer}>
           <Icon style={styles.icon} fill={styles.icon.color} name='globe-2-outline' />
-          <Text style={styles.caption}>{PostedTime(props.posed_on)}</Text>
+          <Text style={styles.caption}>{PostedTime(data.posted_on)}</Text>
         </View>
         <View>
-          <Text style={styles.caption}>12 Comments</Text>
+          <Text style={styles.caption}>{data.comments} Comments</Text>
         </View>
       </View>
       <Divider style={styles.divider} />

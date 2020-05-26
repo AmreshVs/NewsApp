@@ -3,6 +3,7 @@ import { StyleSheet, Dimensions, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 import Pdf from 'react-native-pdf';
+import TopNav from '@comp/topNav';
 
 const PDFViewer = () => {
 
@@ -11,7 +12,7 @@ const PDFViewer = () => {
 
   return (
     <View style={styles.container}>
-      <Pdf source={{uri: url}} style={styles.pdf} />
+      <Pdf source={{ uri: url }} style={styles.pdf} />
     </View>
   )
 }

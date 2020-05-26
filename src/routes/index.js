@@ -8,6 +8,7 @@ import Home from '@screen/home';
 import Test from '@screen/test';
 import VerticalFullScreenVideo from '@screen/verticalFullScreenVideo';
 import PDFViewer from '@screen/pdfViewer';
+import NewsDetail from '@screen/newsDetail';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ const Routes = () => {
       <Stack.Screen name="Home" component={Home} />
       <Stack.Screen name="VerticalFullScreenVideo" component={VerticalFullScreenVideo} />
       <Stack.Screen name="PDFViewer" component={PDFViewer} />
+      <Stack.Screen name="NewsDetail" component={NewsDetail} />
       <Stack.Screen name="Test" component={Test} />
     </Stack.Navigator>
   )

@@ -82,7 +82,6 @@ const themedStyle = StyleService.create({
     marginVertical: 5,
     borderRadius: 10,
     alignItems: 'center',
-    backgroundColor: 'background-basic-color-1'
   },
   icon:{
     width: 45,

@@ -8,6 +8,11 @@ const themedStyle = StyleService.create({
     marginBottom: 10,
     fontWeight: '700',
     color: 'color-basic-700'
+  },
+  spinnerContainer:{
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%'
   }
 })
 
