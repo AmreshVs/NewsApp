@@ -5,10 +5,10 @@ import { StyleSheet } from 'react-native';
 import NewsBig from '@comp/home/newsBig';
 import NewsSmall from '@comp/home/newsSmall';
 import VideoBig from '@comp/home/videoBig';
-import Statusbar from '@comp/statusbar';
 import TopSection from '@comp/home/topSection';
 import TodayPdf from '@comp/home/todayPdf';
 import Lang from '@lang';
+import DrawerNav from '@comp/drawerNav';
 
 const NewsItems = ({ item, index }) => {
 
@@ -16,7 +16,7 @@ const NewsItems = ({ item, index }) => {
     if (index === 0) {
       return (
         <>
-          <Statusbar />
+          <DrawerNav/>
           <TopSection />
           <TodayPdf />
           <Text category='h6' style={styles.heading}>{Lang('home.latest_news')}</Text>

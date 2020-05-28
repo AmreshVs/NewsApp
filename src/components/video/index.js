@@ -98,6 +98,7 @@ const VideoPlayer = (props) => {
   }
 
   function handleFullscreen() {
+    props.handleFullscreen(!state.fullscreen);
     setState({ ...state, fullscreen : !state.fullscreen });
     state.fullscreen ? Orientation.unlockAllOrientations() : Orientation.lockToLandscape();
   }
@@ -168,7 +169,6 @@ export default React.memo(VideoPlayer);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ebebeb',
   },
   inlineVideo: {
     height: Dimensions.get('window').width * (9 / 16),

@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import React from 'react';
-import { SafeAreaView, StatusBar, Platform, View } from 'react-native';
-import { ApplicationProvider, IconRegistry, Text, Layout } from '@ui-kitten/components';
+import { StatusBar } from 'react-native';
+import { ApplicationProvider, IconRegistry } from '@ui-kitten/components';
 import { mapping } from '@eva-design/eva';
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { Provider } from 'react-redux';
@@ -28,7 +28,7 @@ const App = () => {
     <>
       <Provider store={store}>
         <IconRegistry icons={EvaIconsPack} />
-        <ApplicationProvider mapping={mapping} theme={theme === 'dark' ? lightTheme : darkTheme}>
+        <ApplicationProvider mapping={mapping} theme={theme === 'light' ? lightTheme : darkTheme}>
           <NavigationContainer ref={navigationRef}>
             <Routes/>
           </NavigationContainer>

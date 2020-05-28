@@ -1,20 +1,31 @@
 import React from 'react';
 import { View, Image } from 'react-native';
 import { StyleService, useStyleSheet, Text, Divider, Icon } from '@ui-kitten/components';
+import { useNavigation } from '@react-navigation/native';
+import Ripple from 'react-native-material-ripple';
 
 import PostedTime from '@common/postedTime';
 
-const NewsSmall = ({data}) => {
+const NewsSmall = ({ data }) => {
 
+  const navigation = useNavigation();
   const styles = useStyleSheet(themedStyle);
+
+  const handleNavigation = () => {
+    navigation.navigate('NewsDetail', { id: data.id, type: 'news' });
+  }
 
   return (
     <>
       <View style={styles.container}>
         <View style={styles.bottomContainer}>
-          <Image style={styles.image} source={{ uri: data.featured_img }} />
+          <Ripple onPress={handleNavigation} style={styles.imageContainer}>
+            <Image style={styles.image} source={{ uri: data.featured_img }} />
+          </Ripple>
           <View style={styles.contentContainer}>
-            <Text category='p1' style={styles.title}>{data.id + ' ' + data.title}</Text>
+            <Ripple onPress={handleNavigation}>
+              <Text category='p1' style={styles.title}>{data.id + ' ' + data.title}</Text>
+            </Ripple>
             <View style={styles.bottomContainer}>
               <View style={styles.iconContainer}>
                 <Icon style={styles.icon} fill={styles.icon.color} name='globe-2-outline' />
@@ -36,15 +47,15 @@ export default NewsSmall;
 
 const themedStyle = StyleService.create({
   image: {
-    width: '30%',
+    width: '100%',
     height: 100,
     borderRadius: 10,
   },
-  title: {
-    
+  imageContainer: {
+    width: '30%'
   },
   container: {
-    
+
   },
   caption: {
     color: 'color-basic-600'
@@ -63,12 +74,12 @@ const themedStyle = StyleService.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  contentContainer:{
+  contentContainer: {
     width: '70%',
     paddingLeft: 5,
     justifyContent: 'space-between'
   },
-  divider:{
+  divider: {
     marginTop: 15,
     marginBottom: 15
   }

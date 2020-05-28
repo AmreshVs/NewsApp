@@ -4,9 +4,7 @@ import { StyleService, useStyleSheet, Text, Divider, Icon } from '@ui-kitten/com
 import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
 
-import PostedTime from '@common/postedTime';
-
-const NewsBig = ({data}) => {
+const NewsBig = ({handleFavourite, data}) => {
   
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyle);
@@ -14,25 +12,25 @@ const NewsBig = ({data}) => {
   const handleNavigation = () => {
     navigation.navigate('NewsDetail', { id: data.id, type: 'news' });
   }
+
+  const FavouritesIcon = (props) => {
+    return(
+      <Ripple style={styles.iconContainer} onPress={() => handleFavourite({id: `${data.id}`, type: 'news'})}>
+        <Icon {...props} style={styles.icon} fill={styles.icon.color} name='bookmark' />
+      </Ripple>
+    )
+  }
  
   return (
     <>
       <View style={styles.container}>
+        <FavouritesIcon/>
         <Ripple onPress={handleNavigation}>
           <Image style={styles.image} source={{ uri: data.featured_img }} />
         </Ripple>
         <Ripple onPress={handleNavigation}>
           <Text category='p1' style={styles.title}>{data.title}</Text>
         </Ripple>
-        <View style={styles.bottomContainer}>
-          <View style={styles.iconContainer}>
-            <Icon style={styles.icon} fill={styles.icon.color} name='globe-2-outline' />
-            <Text style={styles.caption}>{PostedTime(data.posted_on)}</Text>
-          </View>
-          <View>
-            <Text style={styles.caption}>{data.comments} Comments</Text>
-          </View>
-        </View>
         <Divider style={styles.divider} />
       </View>
     </>
@@ -56,15 +54,16 @@ const themedStyle = StyleService.create({
   caption: {
     color: 'color-basic-600'
   },
-  icon: {
-    width: 17,
-    height: 17,
-    color: 'color-basic-600',
-    marginRight: 5
+  iconContainer:{
+    position: 'absolute',
+    right: 10,
+    top: 10,
+    zIndex: 1
   },
-  iconContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  icon: {
+    width: 30,
+    height: 30,
+    color: 'color-basic-100',
   },
   bottomContainer: {
     flexDirection: 'row',

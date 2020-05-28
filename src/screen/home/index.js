@@ -1,12 +1,13 @@
 import React from 'react';
-import { Layout, useStyleSheet, Text, Spinner } from '@ui-kitten/components';
-import { View, FlatList, RefreshControl } from 'react-native';
+import { Layout, useStyleSheet } from '@ui-kitten/components';
+import { FlatList, RefreshControl } from 'react-native';
 import _ from 'lodash';
 
 import NewsItems from '@comp/home/newsItems';
 import themedStyle from './style';
 import { useAxios } from '@hooks';
 import { API_URL } from '@const';
+import Loader from '@comp/loader';
 
 const Home = () => {
   const styles = useStyleSheet(themedStyle);
@@ -39,16 +40,14 @@ const Home = () => {
   return (
     <Layout level='1'>
       {state.data.length <= 0 ?
-        <View style={styles.spinnerContainer}>
-          <Spinner/>
-        </View>
+        <Loader/>
       :
         <FlatList
           data={state.data}
           style={styles.container}
           onEndReachedThreshold={1}
           refreshing={state.refresh}
-          onRefresh={() => loadMore()}
+          onRefresh={loadMore}
           onEndReached={loadMore}
           renderItem={({ item, index }) => <NewsItems item={item} index={index} />}
           keyExtractor={(item, index) => index.toString()}

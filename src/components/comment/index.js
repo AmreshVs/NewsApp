@@ -1,74 +1,120 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { View } from 'react-native';
 import { Text, Button, Divider, Input, useStyleSheet } from '@ui-kitten/components';
 
 import themedStyle from './style';
+import { useAxios } from '@hooks';
+import { ADD_COMMENT } from '@api';
+import snackBar from '@common/snackBar';
+import Lang from '@lang';
 
-const Avatar = ({ name }) => {
+const Comment = ({ data, user_id, post_id, type }) => {
+
+  let comment_type = type === 'video' ? 'video' : 'news';
+  const styles = useStyleSheet(themedStyle);
+  const [comment, setComment] = React.useState('');
+  const [innerComment, setInnerComment] = React.useState('');
+  const [reply, setReply] = React.useState('');
+
+  const Avatar = ({ name }) => {
+    return (
+      <Text style={styles.avatarContainer} category='p1'>{name}</Text>
+    )
+  }
+
+  const handleReply = (index) => {
+    setReply(index);
+  }
+
+  const handlePostReply = async () => {
+    if(comment.length === 0){
+      snackBar('Comment cannot be empty!');
+      return false;
+    }
+    let response = await useAxios(ADD_COMMENT, { user_id: user_id, comment: comment, comment_type: comment_type, reply_to: 'post', reply_id: post_id, is_verified: 0 });
+    snackBar(response.message);
+    setComment('');
+  }
+
+  const handlePostInnerReply = async (index) => {
+    if(innerComment.length === 0){
+      snackBar('Comment cannot be empty!');
+      return false;
+    }
+    let response = await useAxios(ADD_COMMENT, { user_id: user_id, comment: innerComment, comment_type: comment_type, reply_to: 'comment', reply_id: index, is_verified: 0 });
+    snackBar(response.message);
+    setInnerComment('');
+    setReply('');
+  }
+
   return (
-    <View >
-      <Text>A</Text>
+    <View style={styles.commentBox}>
+      <Text category="h6" style={styles.commentHeading}>{Lang('comment.comments')}</Text>
+      <Divider />
+      <View style={styles.commentsContainer}>
+        <View>
+          <Avatar name={'U'} />
+        </View>
+        <View style={styles.outerCommentBtn}>
+          <Input style={styles.commentBoxContainer} placeholder={Lang('comment.post_comment')} value={comment} onChangeText={nextValue => setComment(nextValue)} />
+          <Button style={styles.innerAddBtn} appearance='outline' size='small' onPress={handlePostReply}>{Lang('comment.add')}</Button>
+        </View>
+      </View>
+      {data.map((item, index) => {
+        let avatar_name = item.posted_by.charAt(0).toUpperCase();
+        let posted_by = item.posted_by.charAt(0).toUpperCase() + item.posted_by.slice(1);
+        return (
+          <View style={styles.commentsContainer}>
+            <View>
+              <Avatar name={avatar_name} />
+            </View>
+            <View style={[styles.commentContent, styles.xs10]}>
+              <View style={styles.nameContainer}>
+                <Text category="h6">{posted_by}</Text>
+                <Text style={styles.posted_on}>{` ${Lang('comment.on')} ${item.posted_at}`}</Text>
+              </View>
+              <Text category="p1">{item.comment}</Text>
+              {item.reply_comments.map((comment) => {
+                let avatar_name = comment.posted_by.charAt(0).toUpperCase();
+                let posted_by = comment.posted_by.charAt(0).toUpperCase() + comment.posted_by.slice(1);
+                return (
+                  <View style={styles.innerCommentsContainer}>
+                    <View style={styles.xs3}>
+                      <Avatar name={avatar_name} />
+                    </View>
+                    <View style={[styles.commentContent, styles.xs11]}>
+                      <View style={styles.nameContainer}>
+                        <Text category="h6">{posted_by}</Text>
+                        <Text style={styles.posted_on}>{` ${Lang('comment.on')} ${comment.posted_at}`}</Text>
+                      </View>
+                      <Text category="p1">{comment.comment}</Text>
+                    </View>
+                  </View>
+                )
+              })}
+              {reply === index ?
+                <View style={styles.innerCommentsContainer}>
+                  <View style={styles.xs3}>
+                    <Avatar name={avatar_name} />
+                  </View>
+                  <View style={styles.commentBtn}>
+                    <Input style={styles.xs9} placeholder={Lang('comment.post_comment')} value={innerComment} onChangeText={nextValue => setInnerComment(nextValue)} />
+                    <Button style={styles.innerAddBtn} size='small' appearance='outline' onPress={() => handlePostInnerReply(item.id)}>
+                      {Lang('comment.add')}
+                    </Button>
+                  </View>
+                </View>
+                : null}
+              <Button style={styles.replyBtn} status='primary' appearance='ghost' onPress={() => handleReply(reply !== index ? index : '')}>{reply !== index ? Lang('comment.reply') : Lang('comment.cancel')}</Button>
+            </View>
+          </View>
+        )
+      })}
     </View>
   )
 }
 
-const Comment = () => {
+const mapStateToProps = state => state.common.userData;
 
-  const styles = useStyleSheet(themedStyle);
-  const [value, setValue] = React.useState('');
-
-  return (
-    <>
-      <Text category="h6" style={styles.commentHeading}>Comments</Text>
-      <Divider />
-      <View style={styles.commentsContainer}>
-        <View xs={1}>
-          <Avatar name='A' />
-        </View>
-        <View xs={11}>
-          <Text category="h6">Ram Prakash</Text>
-          <Text category="p1">Useful News</Text>
-          <View style={styles.commentsContainer}>
-            <View xs={1}>
-              <Avatar name='A' />
-            </View>
-            <View xs={11}>
-              <Text category="h6">Amresh Vs</Text>
-              <Text category="body2">very Nice</Text>
-            </View>
-          </View>
-          <View style={styles.commentsContainer}>
-            <View xs={1}>
-              <Avatar name='A' />
-            </View>
-            <View xs={9} style={styles.commentBoxContainer}>
-              <Input placeholder='Place your Text' value={value} onChangeText={nextValue => setValue(nextValue)} />
-            </View>
-            <View xs={1}>
-              <Button category="contained" color="primary" onClick={() => console.log('innerComment')}>
-                Add
-              </Button>
-            </View>
-          </View>
-          <Button style={styles.replyButton} color="primary" onClick={() => console.log('handleReply')}>Reply</Button>
-        </View>
-      </View>
-
-      <View style={styles.commentsContainer} container spacing={3}>
-        <View xs={1}>
-          <Avatar name='A' />
-        </View>
-        <View xs={9} style={styles.commentBoxContainer}>
-          <Input placeholder='Place your Text' value={value} onChangeText={nextValue => setValue(nextValue)} />
-        </View>
-        <View xs={1}>
-          <Button>
-            Add
-          </Button>
-        </View>
-      </View>
-    </>
-  )
-}
-
-export default Comment;
+export default connect(mapStateToProps)(Comment);

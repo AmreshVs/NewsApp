@@ -16,9 +16,42 @@ export const SEND_OTP = {
 }
 
 export const LATEST_NEWS = {
-  url: `${API_URL}/latest-news?page=1&size=10`,
+  url: `${API_URL}/latest-news?`,
+  method: 'GET'
 }
 
 export const TOP_SECTION = {
   url: `${API_URL}/top-section`,
+  method: 'GET'
+}
+
+export const GET_NEWS_DETAIL = {
+  url: `${API_URL}/get-news-detail?id=`,
+  method: 'GET'
+}
+
+export const GET_VIDEO_DETAIL = {
+  url: `${API_URL}/get-video-detail?id=`,
+  method: 'GET'
+}
+
+export const ADD_COMMENT = {
+  url: `${API_URL}/add-comment`,
+  method: 'POST',
+  header:{
+    'Content-Type' : 'application/json'
+  }
+}
+
+export const ADD_FAVOURITES = {
+  url: `${API_URL}/add-favourites`,
+  method: 'POST',
+  header:{
+    'Content-Type' : 'application/json'
+  }
+}
+
+export const GET_FAV_ITEMS = {
+  url: `${API_URL}/get-fav-items`,
+  method: 'GET'
 }

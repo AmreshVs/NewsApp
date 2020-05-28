@@ -22,5 +22,13 @@
   "home":{
     "today_pdf": "Today's PDF",
     "latest_news": "Latest News"
+  },
+  "comment": {
+    "comments": "Comments",
+    "on": "on",
+    "post_comment": "Post Comment",
+    "add": "Add",
+    "reply": "Reply",
+    "cancel": "Cancel"
   }
 }
