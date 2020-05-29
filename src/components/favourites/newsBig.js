@@ -58,11 +58,14 @@ const themedStyle = StyleService.create({
     position: 'absolute',
     right: 10,
     top: 10,
-    zIndex: 1
+    zIndex: 1,
+    backgroundColor: 'color-basic-800',
+    borderRadius: 20,
+    padding: 3
   },
   icon: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     color: 'color-basic-100',
   },
   bottomContainer: {

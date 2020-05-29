@@ -1,9 +1,8 @@
 import React from 'react';
-import { StyleSheet, Dimensions, View } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 import { useRoute } from '@react-navigation/native';
-
+import { Spinner, Layout } from '@ui-kitten/components';
 import Pdf from 'react-native-pdf';
-import TopNav from '@comp/topNav';
 
 const PDFViewer = () => {
 
@@ -11,9 +10,9 @@ const PDFViewer = () => {
   const url = route.params.url;
 
   return (
-    <View style={styles.container}>
-      <Pdf source={{ uri: url }} style={styles.pdf} />
-    </View>
+    <Layout style={styles.container}>
+      <Pdf source={{ uri: url }} style={styles.pdf} activityIndicator={<Spinner/>} />
+    </Layout>
   )
 }
 

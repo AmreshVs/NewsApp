@@ -15,7 +15,11 @@ const themedStyle = StyleService.create({
   noData:{
     justifyContent: 'center',
     alignItems: 'center',
-    height: '100%'
+    height: '97%'
+  },
+  icon:{
+    width: 25,
+    height: 25
   }
 })
 

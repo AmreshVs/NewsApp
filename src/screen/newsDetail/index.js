@@ -14,7 +14,7 @@ import { GET_NEWS_DETAIL, GET_VIDEO_DETAIL, ADD_FAVOURITES } from '@api';
 import VideoPlayer from '@comp/video';
 import Loader from '@comp/loader';
 
-const NewsDetail = ({user_id}) => {
+const NewsDetail = ({userData, theme}) => {
 
   const styles = useStyleSheet(themedStyle);
   const route = useRoute();
@@ -41,7 +41,7 @@ const NewsDetail = ({user_id}) => {
 
   const handleFavourite = async () => {
     setFavourite(!favourite);
-    await useAxios(ADD_FAVOURITES, { user_id: user_id, id: `${id}`, type: type });
+    await useAxios(ADD_FAVOURITES, { user_id: userData.user_id, id: `${id}`, type: type });
   }
 
   const RightIcon = (props) => {
@@ -76,7 +76,7 @@ const NewsDetail = ({user_id}) => {
                   <Image style={styles.featured_img} source={{ uri: data.featured_img }} />
                 }
                 <Text category='h6' style={styles.heading}>{data.title}</Text>
-                <HTMLView value={data.content} stylesheet={styles.html} />
+                <HTMLView value={data.content} stylesheet={theme === 'dark' ? { p: { color: '#FFF' }} : null} />
               </View>
               <Comment data={data.comments} post_id={data.id} type={type} />
             </ScrollView>
@@ -94,6 +94,6 @@ const NewsDetail = ({user_id}) => {
 
 }
 
-const mapStateToProps = state => state.common.userData;
+const mapStateToProps = state => state.common;
 
 export default connect(mapStateToProps)(React.memo(NewsDetail));

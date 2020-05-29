@@ -21,7 +21,7 @@ const themedStyle = StyleService.create({
   },
   html:{
     p:{
-      // color: '#FFF'
+      color: '#FFF'
     }
   },
   spinnerContainer:{

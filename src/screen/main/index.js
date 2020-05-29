@@ -8,7 +8,7 @@ import RNOtpVerify from 'react-native-otp-verify';
 import axios from 'axios';
 
 import { setAutoOtpHash } from '@redux/actions/commonActions'
-import { setUserData } from '@redux/actions/commonActions';
+import { setUserData, toggleTheme } from '@redux/actions/commonActions';
 
 const Main = (props) => {
 
@@ -22,9 +22,13 @@ const Main = (props) => {
 
   const checkUserLogin = async () => {
     const userData = await AsyncStorage.getItem('@ValarTamil:userData');
+    const theme = await AsyncStorage.getItem('@ValarTamil:theme');
     if (userData !== null) {
       axios.defaults.headers.common['Authorization'] = JSON.parse(userData).token;
       await props.setUserData(JSON.parse(userData));
+      if(theme !== null){
+        props.toggleTheme(theme === 'dark' ? true : false);
+      }
       props.navigation.navigate('Root');
     }
     else {
@@ -44,7 +48,7 @@ const Main = (props) => {
 const mapStateToProps = (state) => state.common;
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ setAutoOtpHash: setAutoOtpHash, setUserData: setUserData }, dispatch);
+  return bindActionCreators({ setAutoOtpHash: setAutoOtpHash, setUserData: setUserData, toggleTheme: toggleTheme }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Main);

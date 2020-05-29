@@ -5,7 +5,6 @@ import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
 
 import VideoPlayer from '@comp/video';
-import PostedTime from '@common/postedTime';
 
 const VideoBig = ({ data, handleFavourite }) => {
 
@@ -75,11 +74,14 @@ const themedStyle = StyleService.create({
     position: 'absolute',
     right: 10,
     top: 10,
-    zIndex: 9999
+    zIndex: 99,
+    backgroundColor: 'color-basic-800',
+    borderRadius: 20,
+    padding: 3
   },
   icon: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     color: 'color-basic-100',
   },
   divider: {

@@ -47,7 +47,7 @@ const themedStyle = StyleService.create({
   header:{
     width: '100%',
     flexDirection: 'row',
-    marginBottom: 15
+    marginVertical: 5
   },
   col1:{
     width: '50%',

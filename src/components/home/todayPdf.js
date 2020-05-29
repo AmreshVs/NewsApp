@@ -29,7 +29,12 @@ const TodayPdf = () => {
 
   return (
     <>
-      <Text category='h6' style={styles.heading}>{Lang('home.today_pdf')}</Text>
+      <View style={styles.headingContainer}>
+        <Text category='h6' style={styles.heading}>{Lang('home.today_pdf')}</Text>
+        <Ripple onPress={() => navigation.navigate('AllPdfs')}>
+          <Text category='h6' style={styles.more}>{Lang('home.more')}</Text>
+        </Ripple>
+      </View>
       {data.length <= 0 ?
         <View style={styles.spinnerContainer}>
           <Spinner />
@@ -79,5 +84,13 @@ const themedStyle = StyleService.create({
     justifyContent: 'center',
     alignItems: 'center',
     height: 200
+  },
+  headingContainer:{
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  more:{
+    marginBottom: 5,
+    color: 'color-basic-600',
   }
 });

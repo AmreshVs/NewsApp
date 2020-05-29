@@ -21,7 +21,8 @@
   },
   "home":{
     "today_pdf": "Today's PDF",
-    "latest_news": "Latest News"
+    "latest_news": "Latest News",
+    "more": "more"
   },
   "comment": {
     "comments": "Comments",

@@ -55,3 +55,8 @@ export const GET_FAV_ITEMS = {
   url: `${API_URL}/get-fav-items`,
   method: 'GET'
 }
+
+export const GET_ALL_USER_PDF = {
+  url: `${API_URL}/get-all-user-pdf`,
+  method: 'GET'
+}

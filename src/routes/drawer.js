@@ -1,38 +1,81 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Drawer, DrawerItem, IndexPath, Icon } from '@ui-kitten/components';
+import { Drawer, DrawerItem, IndexPath, Icon, Text, StyleService, useStyleSheet, Layout } from '@ui-kitten/components';
+import Ripple from 'react-native-material-ripple';
 
 const { Navigator, Screen } = createDrawerNavigator();
 import Home from '@screen/home';
 import Favourites from '@screen/favourites';
+import store from '@redux/stores'
+import { toggleTheme } from '@redux/actions/commonActions';
 
 const HomeIcon = (props) => (
-  <Icon {...props} name='home-outline'/>
+  <Icon {...props} name='home-outline' />
 );
 
 const BookmarkIcon = (props) => (
-  <Icon {...props} name='bookmark-outline'/>
+  <Icon {...props} name='bookmark-outline' />
 );
 
-const DrawerContent = ({ navigation, state }) => (
-  <Drawer
-    selectedIndex={new IndexPath(state.index)}
-    onSelect={index => navigation.navigate(state.routeNames[index.row])}>
-    <DrawerItem title='Home' accessoryLeft={HomeIcon} />
-    <DrawerItem title='Saved' accessoryLeft={BookmarkIcon} />
-  </Drawer>
-);
+const header = ({ userData, theme }) => {
+
+  const styles = useStyleSheet(themedStyle);
+  const [toggle, setToggle] = React.useState(theme === 'dark' ? true : false);
+
+  const handleToggle = () => {
+    store.dispatch(toggleTheme(!toggle));
+    setToggle(!toggle);
+  }
+
+  return (
+    <Layout style={styles.header}>
+      <Text category='h6'>{userData.fullname}</Text>
+      <Ripple onPress={handleToggle}>
+        <Icon style={styles.icon} fill={styles.icon.color} name={toggle === true ? 'sun-outline' : 'moon'} />
+      </Ripple>
+    </Layout>
+  )
+}
+
+const DrawerContent = ({ navigation, state }) => {
+
+  const mapStateToProps = state => state.common;
+
+  return (
+    <Drawer
+      header={connect(mapStateToProps)(header)}
+      selectedIndex={new IndexPath(state.index)}
+      onSelect={index => navigation.navigate(state.routeNames[index.row])}>
+      <DrawerItem title='Home' accessoryLeft={HomeIcon} />
+      <DrawerItem title='Saved' accessoryLeft={BookmarkIcon} />
+    </Drawer>
+  );
+}
 
 export const DrawerNavigator = () => (
-  <Navigator drawerContent={props => <DrawerContent {...props}/>}>
+  <Navigator drawerContent={props => <DrawerContent {...props} />}>
     <Screen name="Home" component={Home} />
-    <Screen name='Favourites' component={Favourites}/>
+    <Screen name='Favourites' component={Favourites} />
   </Navigator>
 );
 
 export const AppNavigator = () => (
   <NavigationContainer>
-    <DrawerNavigator/>
+    <DrawerNavigator />
   </NavigationContainer>
 );
+
+const themedStyle = StyleService.create({
+  header: {
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between'
+  },
+  icon: {
+    width: 25,
+    height: 25,
+    color: 'color-primary-500'
+  }
+});

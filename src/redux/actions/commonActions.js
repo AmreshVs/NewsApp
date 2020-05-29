@@ -1,4 +1,5 @@
-import { USER_DATA, AUTO_OTP_HASH } from '@redux/actionCreators/commonAC';
+import { USER_DATA, AUTO_OTP_HASH, TOGGLE_THEME } from '@redux/actionCreators/commonAC';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export const setUserData = (payload) => {
   return {
@@ -11,6 +12,18 @@ export const setUserData = (payload) => {
 export const setAutoOtpHash = (payload) => {
   return {
     type: AUTO_OTP_HASH,
+    payload
+  };
+};
+
+export const toggleTheme = (payload) => {
+  async function getItem(){
+    let theme = payload === true ? 'dark' : 'light';
+    await AsyncStorage.setItem('@ValarTamil:theme', theme);
+  }
+  getItem();
+  return {
+    type: TOGGLE_THEME,
     payload
   };
 };

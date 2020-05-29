@@ -1,49 +1,46 @@
 import React from 'react';
-import { StyleSheet, Dimensions, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { Layout, Tab, TabView, Text } from '@ui-kitten/components';
+import { ScrollView } from 'react-native-gesture-handler';
 
-import Pdf from 'react-native-pdf';
+const Test = () => {
 
-export default class Test extends React.Component {
-  render() {
-    const source = { uri: '', cache: true };
-    //const source = require('./test.pdf');  // ios only
-    //const source = {uri:'bundle-assets://test.pdf'};
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-    //const source = {uri:'file:///sdcard/test.pdf'};
-    //const source = {uri:"data:application/pdf;base64,JVBERi0xLjcKJc..."};
+  const shouldLoadComponent = (index) => index === selectedIndex;
 
-    return (
-      <View style={styles.container}>
-        <Pdf
-          source={source}
-          onLoadComplete={(numberOfPages, filePath) => {
-            // console.log(`number of pages: ${numberOfPages}`);
-          }}
-          onPageChanged={(page, numberOfPages) => {
-            // console.log(`current page: ${page}`);
-          }}
-          onError={(error) => {
-            // console.log(error);
-          }}
-          onPressLink={(uri) => {
-            // console.log(`Link presse: ${uri}`)
-          }}
-          style={styles.pdf} />
-      </View>
-    )
-  }
-}
+  return (
+    <ScrollView horizontal={true}>
+      <TabView
+        selectedIndex={selectedIndex}
+        shouldLoadComponent={shouldLoadComponent}
+        onSelect={index => setSelectedIndex(index)}>
+        <Tab title='USERS'>
+          <Layout style={styles.tabContainer}>
+            <Text category='h5'>USERS</Text>
+          </Layout>
+        </Tab>
+        <Tab title='ORDERS'>
+          <Layout style={styles.tabContainer}>
+            <Text category='h5'>ORDERS</Text>
+          </Layout>
+        </Tab>
+        <Tab title='TRANSACTIONS'>
+          <Layout style={styles.tabContainer}>
+            <Text category='h5'>TRANSACTIONS</Text>
+          </Layout>
+        </Tab>
+      </TabView>
+    </ScrollView>
+  );
+};
+
+export default Test;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'flex-start',
+  tabContainer: {
+    height: 64,
     alignItems: 'center',
-    // marginTop: 25,
+    justifyContent: 'center',
   },
-  pdf: {
-    flex: 1,
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height,
-  }
 });

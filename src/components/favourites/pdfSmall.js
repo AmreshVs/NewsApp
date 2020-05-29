@@ -1,17 +1,17 @@
 import React from 'react';
 import { View, Image } from 'react-native';
-import { StyleService, useStyleSheet, Text, Divider, Icon } from '@ui-kitten/components';
+import { StyleService, useStyleSheet, Icon, Text } from '@ui-kitten/components';
 import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
 
 
-const PdfSmall = ({ data }) => {
-
+const PdfSmall = ({ data, handleFavourite }) => {
+  
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyle);
 
   const handleNavigation = () => {
-    navigation.navigate('NewsDetail', { id: data.id, type: 'news' });
+    navigation.navigate('PDFViewer', { url: data.url });
   }
 
   const FavouritesIcon = (props) => {
@@ -25,9 +25,10 @@ const PdfSmall = ({ data }) => {
   return (
     <View style={styles.container}>
       <View style={styles.bottomContainer}>
-        <FavouritesIcon/>
+        {handleFavourite !== undefined ? <FavouritesIcon/> : null}
         <Ripple onPress={handleNavigation} style={styles.imageContainer}>
           <Image style={styles.image} source={{ uri: data.featured_img }} />
+          {handleFavourite === undefined ? <Text style={styles.posted_on}>{data.posted_on}</Text> : null}
         </Ripple>
       </View>
     </View>
@@ -39,35 +40,40 @@ export default PdfSmall;
 const themedStyle = StyleService.create({
   image: {
     width: '100%',
-    height: 250,
-    borderRadius: 10,
-    resizeMode: 'contain'
+    height: 330,
+    resizeMode: 'stretch'
   },
   imageContainer: {
-    width: '100%'
+    width: '100%',
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: 'background-basic-color-4',
+    padding: 5,
   },
   container: {
-    width: '40%',
-    
+    width: '50%',
   },
   iconContainer:{
     position: 'absolute',
     right: 10,
     top: 10,
-    zIndex: 1
+    zIndex: 1,
+    backgroundColor: 'color-basic-800',
+    borderRadius: 20,
+    padding: 3
   },
   icon: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
     color: 'color-basic-100',
   },
   bottomContainer: {
     flexDirection: 'column',
     justifyContent: 'space-between',
-    flexWrap: 'wrap'
+    padding: 5,
   },
-  divider: {
-    marginTop: 15,
-    marginBottom: 15
+  posted_on:{
+    textAlign: 'center',
+    paddingTop: 5
   }
 });

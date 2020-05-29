@@ -25,17 +25,15 @@ export default DarwerNav;
 
 const styles = StyleSheet.create({
   topNav:{
-    // paddingHorizontal: 10,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
   topNavContainer:{
     width: '100%',
-    height: 50,
+    height: 35,
     justifyContent: 'center',
     flexDirection: 'row',
-    // backgroundColor: 'red'
   },
   leftContainer:{
     width: '50%',
