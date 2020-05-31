@@ -15,7 +15,7 @@ const CommonDataReducer = (state = initialState(), action) => {
     case AUTO_OTP_HASH:
       return { ...state, autoOtpHash: action.payload };
     case TOGGLE_THEME:
-      return { ...state, theme: action.theme === true ? 'dark' : 'light' };
+      return { ...state, theme: action.payload === true ? 'dark' : 'light' };
     default:
       return state;
   }

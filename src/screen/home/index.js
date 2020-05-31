@@ -1,7 +1,6 @@
 import React from 'react';
 import { Layout, useStyleSheet } from '@ui-kitten/components';
 import { FlatList, RefreshControl } from 'react-native';
-import _ from 'lodash';
 
 import NewsItems from '@comp/home/newsItems';
 import themedStyle from './style';

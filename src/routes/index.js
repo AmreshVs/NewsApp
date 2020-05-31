@@ -15,6 +15,7 @@ import VerticalFullScreenVideo from '@screen/verticalFullScreenVideo';
 import PDFViewer from '@screen/pdfViewer';
 import NewsDetail from '@screen/newsDetail';
 import AllPdfs from '@screen/allPdfs';
+import NewsWithCategory from '@screen/newsWithCategory';
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,7 @@ const Routes = ({ theme }) => {
         <Stack.Screen name="PDFViewer" component={PDFViewer} />
         <Stack.Screen name="NewsDetail" component={NewsDetail} />
         <Stack.Screen name="AllPdfs" component={AllPdfs} />
+        <Stack.Screen name="NewsWithCategory" component={NewsWithCategory} />
         <Stack.Screen name="Test" component={Test} />
       </Stack.Navigator>
     </ApplicationProvider>

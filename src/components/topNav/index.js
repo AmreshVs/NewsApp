@@ -5,6 +5,31 @@ import { useNavigation } from '@react-navigation/native';
 
 const TopNav = (props) => {
 
+  const styles = StyleSheet.create({
+    topNav:{
+      paddingHorizontal: 10,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center'
+    },
+    topNavContainer:{
+      width: '100%',
+      height: props.small ? 45 : 60,
+      justifyContent: 'center',
+      flexDirection: 'row',
+    },
+    leftContainer:{
+      width: '50%',
+      flexDirection: 'row',
+      justifyContent: 'flex-start'
+    },
+    rightContainer:{
+      width: '50%',
+      flexDirection: 'row',
+      justifyContent: 'flex-end'
+    }
+  });
+
   const navigation = useNavigation();
   const BackIcon = (props) => (
     <Icon {...props} name='arrow-back' onPress={() => navigation.goBack()} />
@@ -22,28 +47,3 @@ const TopNav = (props) => {
 }
 
 export default TopNav;
-
-const styles = StyleSheet.create({
-  topNav:{
-    paddingHorizontal: 10,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  topNavContainer:{
-    width: '100%',
-    height: 60,
-    justifyContent: 'center',
-    flexDirection: 'row',
-  },
-  leftContainer:{
-    width: '50%',
-    flexDirection: 'row',
-    justifyContent: 'flex-start'
-  },
-  rightContainer:{
-    width: '50%',
-    flexDirection: 'row',
-    justifyContent: 'flex-end'
-  }
-})

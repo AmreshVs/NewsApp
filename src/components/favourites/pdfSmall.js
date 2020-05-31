@@ -48,6 +48,7 @@ const themedStyle = StyleService.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: 'background-basic-color-4',
+    backgroundColor: 'background-basic-color-2',
     padding: 5,
   },
   container: {

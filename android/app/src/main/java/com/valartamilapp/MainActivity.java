@@ -1,4 +1,4 @@
-package com.valartamilapp;
+package valartamilpublications.com;
 
 import com.facebook.react.ReactActivity;
 

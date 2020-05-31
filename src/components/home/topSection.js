@@ -1,10 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { View, Image } from 'react-native';
 import { useStyleSheet, StyleService, Icon, Text } from '@ui-kitten/components';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from '@react-navigation/core';
 
-const TopSection = (props) => {
+const TopSection = ({ theme }) => {
   
   const styles = useStyleSheet(themedStyle);
   const navigation = useNavigation();
@@ -23,25 +24,27 @@ const TopSection = (props) => {
         <Image style={styles.videoThumb} source={{ uri: 'https://embedwistia-a.akamaihd.net/deliveries/d9a36bc6ec0f34ae59a48f6082c5351d908a341d.webp?image_crop_resized=1078x1980' }} />
       </Ripple>
       <View style={styles.col2}>
-        <Image style={styles.logo} source={require('../../img/vt_logo.png')} />
-        <Ripple style={styles.brandLogoContainer}>
-          <Image style={styles.brandLogo} source={require('../../img/agri_logo.png')} />
+        <Image style={styles.logo} source={theme === 'dark' ? require('../../img/vt_logo_light.png') : require('../../img/vt_logo.png')} />
+        <Ripple style={styles.brandLogoContainer} onPress={() => navigation.navigate('NewsWithCategory', { brand_id: 3 })}>
+          <Image style={styles.brandLogo} source={theme === 'dark' ? require('../../img/agri_logo_light.png') : require('../../img/agri_logo.png')} />
         </Ripple>
-        <Ripple style={styles.brandLogoContainer} >
+        <Ripple style={styles.brandLogoContainer} onPress={() => navigation.navigate('NewsWithCategory', { brand_id: 1 })}>
           <Image style={styles.brandLogo} source={require('../../img/kaalaimani_logo.png')} />
         </Ripple>
-        <Ripple style={styles.brandLogoContainer} >
+        <Ripple style={styles.brandLogoContainer} onPress={() => navigation.navigate('NewsWithCategory', { brand_id: 4 })}>
           <Image style={styles.brandLogo} source={require('../../img/myhome_logo.png')} />
         </Ripple>
-        <Ripple style={styles.brandLogoContainer} >
-          <Image style={styles.brandLogo} source={require('../../img/holidaynews_logo.png')} />
+        <Ripple style={styles.brandLogoContainer} onPress={() => navigation.navigate('NewsWithCategory', { brand_id: 5 })}>
+          <Image style={styles.brandLogo} source={theme === 'dark' ? require('../../img/holidaynews_logo_light.png') : require('../../img/holidaynews_logo.png')} />
         </Ripple>
       </View>
     </View>
   )
 }
 
-export default TopSection;
+const mapStateToProps = state => state.common;
+
+export default connect(mapStateToProps)(TopSection);
 
 const themedStyle = StyleService.create({
   header:{

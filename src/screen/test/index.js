@@ -1,36 +1,30 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Layout, Tab, TabView, Text } from '@ui-kitten/components';
 import { ScrollView } from 'react-native-gesture-handler';
 
 const Test = () => {
 
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-
-  const shouldLoadComponent = (index) => index === selectedIndex;
-
   return (
-    <ScrollView horizontal={true}>
-      <TabView
-        selectedIndex={selectedIndex}
-        shouldLoadComponent={shouldLoadComponent}
-        onSelect={index => setSelectedIndex(index)}>
-        <Tab title='USERS'>
-          <Layout style={styles.tabContainer}>
-            <Text category='h5'>USERS</Text>
-          </Layout>
-        </Tab>
-        <Tab title='ORDERS'>
-          <Layout style={styles.tabContainer}>
-            <Text category='h5'>ORDERS</Text>
-          </Layout>
-        </Tab>
-        <Tab title='TRANSACTIONS'>
-          <Layout style={styles.tabContainer}>
-            <Text category='h5'>TRANSACTIONS</Text>
-          </Layout>
-        </Tab>
-      </TabView>
+    <ScrollView horizontal={true} style={styles.tabView}>
+      <View style={styles.tab}>
+        <Text>Check</Text>
+      </View>
+      <View style={styles.tab}>
+        <Text>Check</Text>
+      </View>
+      <View style={styles.tab}>
+        <Text>Check</Text>
+      </View>
+      <View style={styles.tab}>
+        <Text>Check</Text>
+      </View>
+      <View style={styles.tab}>
+        <Text>Check</Text>
+      </View>
+      <View style={styles.tab}>
+        <Text>Check</Text>
+      </View>
     </ScrollView>
   );
 };
@@ -43,4 +37,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  header:{
+    // backgroundColor: 'red'
+  },
+  tabView:{
+    width: '100%',
+    maxHeight: 50,
+    // zIndex: 1
+  },
+  tab:{
+    width: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+  }
 });

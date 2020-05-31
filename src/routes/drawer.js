@@ -23,9 +23,9 @@ const header = ({ userData, theme }) => {
 
   const styles = useStyleSheet(themedStyle);
   const [toggle, setToggle] = React.useState(theme === 'dark' ? true : false);
-
-  const handleToggle = () => {
-    store.dispatch(toggleTheme(!toggle));
+ 
+  const handleToggle = async () => {
+    await store.dispatch(toggleTheme(!toggle));
     setToggle(!toggle);
   }
 

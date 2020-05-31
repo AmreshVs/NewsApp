@@ -17,11 +17,11 @@ export const setAutoOtpHash = (payload) => {
 };
 
 export const toggleTheme = (payload) => {
-  async function getItem(){
+  async function setItem(){
     let theme = payload === true ? 'dark' : 'light';
     await AsyncStorage.setItem('@ValarTamil:theme', theme);
   }
-  getItem();
+  setItem();
   return {
     type: TOGGLE_THEME,
     payload

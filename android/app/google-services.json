@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1014086039915",
+    "firebase_url": "https://valar-tamil-publications.firebaseio.com",
+    "project_id": "valar-tamil-publications",
+    "storage_bucket": "valar-tamil-publications.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1014086039915:android:8aa2dcaf9630e0b3",
+        "android_client_info": {
+          "package_name": "valartamilpublications.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1014086039915-7b3hlccb12ds9ttii3j2rcmuhejn1mon.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4j11wqYTYz8MUdGH3OxT4Wq5aUeG-Ybs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1014086039915-7b3hlccb12ds9ttii3j2rcmuhejn1mon.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

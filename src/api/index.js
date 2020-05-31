@@ -60,3 +60,18 @@ export const GET_ALL_USER_PDF = {
   url: `${API_URL}/get-all-user-pdf`,
   method: 'GET'
 }
+
+export const GET_ALL_USER_CATEGORY = {
+  url: `${API_URL}/get-all-user-category`,
+  method: 'GET'
+}
+
+export const PDF_BY_CATEGORY = {
+  url: `${API_URL}/pdf-by-category`,
+  method: 'GET'
+}
+
+export const NEWS_BY_CATEGORY = {
+  url: `${API_URL}/news-by-category`,
+  method: 'GET'
+}

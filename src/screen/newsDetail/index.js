@@ -76,7 +76,12 @@ const NewsDetail = ({userData, theme}) => {
                   <Image style={styles.featured_img} source={{ uri: data.featured_img }} />
                 }
                 <Text category='h6' style={styles.heading}>{data.title}</Text>
-                <HTMLView value={data.content} stylesheet={theme === 'dark' ? { p: { color: '#FFF' }} : null} />
+                {type === 'videos'
+                  ?
+                    <Text>{data.content}</Text>
+                  :
+                    <HTMLView value={data.content} stylesheet={theme === 'dark' ? { p: { color: '#FFF' } } : null} />
+                }
               </View>
               <Comment data={data.comments} post_id={data.id} type={type} />
             </ScrollView>
