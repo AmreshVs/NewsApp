@@ -1,13 +1,15 @@
 import React from 'react';
 import { Layout, useStyleSheet, StyleService, Text } from '@ui-kitten/components';
 
+import Lang from '@lang';
+
 const NoData = () => {
 
   const styles = useStyleSheet(themedStyle);
 
   return(
     <Layout style={styles.root}>
-      <Text>No Data to load</Text>
+      <Text>{Lang('common.no_data')}</Text>
     </Layout>
   )
 }

@@ -5,6 +5,8 @@ import { useStyleSheet, StyleService, Icon, Text } from '@ui-kitten/components';
 import Ripple from 'react-native-material-ripple';
 import { useNavigation } from '@react-navigation/core';
 
+import Lang from '@lang';
+
 const TopSection = ({ theme }) => {
   
   const styles = useStyleSheet(themedStyle);
@@ -17,7 +19,7 @@ const TopSection = ({ theme }) => {
   return (
     <View style={styles.header}>
       <Ripple style={styles.col1} onPress={handleVideo}>
-        <Text category='label' style={styles.live}>Live</Text>
+        <Text category='label' style={styles.live}>{Lang('home.live')}</Text>
         <View style={styles.iconContainer}>
           <Icon style={styles.icon} name='arrow-right' fill={styles.iconColor.color} />
         </View>

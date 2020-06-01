@@ -3,16 +3,15 @@ import React from 'react';
 import { StatusBar } from 'react-native';
 import { IconRegistry } from '@ui-kitten/components';
 import analytics from '@react-native-firebase/analytics';
-import messaging from '@react-native-firebase/messaging';
 
 import { EvaIconsPack } from '@ui-kitten/eva-icons';
 import { Provider } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 
-
 import { navigationRef, isMountedRef } from '@routes/outsideRoute';
 import store from '@redux/stores';
 import Routes from '@routes';
+import { NotificationListeners } from '@common/firebaseCommon';
 
 // Gets the current screen from navigation state
 const getActiveRouteName = state => {
@@ -39,32 +38,11 @@ const App = () => {
 
     // Save the initial route name
     routeNameRef.current = getActiveRouteName(state);
-    getToken();
+
+    NotificationListeners();
+
     return () => (isMountedRef.current = false);
   }, []);
-
-  const getToken = async () => {
-    messaging().onNotificationOpenedApp(remoteMessage => {
-      console.log(
-        'Notification caused app to open from background state:',
-        remoteMessage,
-      );
-      // navigation.navigate(remoteMessage.data.type);
-    });
-
-    // Check whether an initial notification is available
-    messaging()
-      .getInitialNotification()
-      .then(remoteMessage => {
-        if (remoteMessage) {
-          console.log(
-            'Notification caused app to open from quit state:',
-            remoteMessage.notification,
-          );
-        }
-      });
-    console.log(await messaging().getToken());
-  }
 
   return (
     <>
@@ -74,12 +52,9 @@ const App = () => {
           onStateChange={state => {
             const previousRouteName = routeNameRef.current;
             const currentRouteName = getActiveRouteName(state);
-    
             if (previousRouteName !== currentRouteName) {
               analytics().setCurrentScreen(currentRouteName);
             }
-    
-            // Save the current route name for later comparision
             routeNameRef.current = currentRouteName;
           }}
         >

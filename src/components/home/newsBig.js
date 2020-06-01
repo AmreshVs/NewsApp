@@ -5,16 +5,17 @@ import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
 
 import PostedTime from '@common/postedTime';
+import Lang from '@lang';
 
-const NewsBig = ({data}) => {
-  
+const NewsBig = ({ data }) => {
+
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyle);
 
   const handleNavigation = () => {
     navigation.navigate('NewsDetail', { id: data.id, type: 'news' });
   }
- 
+
   return (
     <>
       <View style={styles.container}>
@@ -29,9 +30,11 @@ const NewsBig = ({data}) => {
             <Icon style={styles.icon} fill={styles.icon.color} name='globe-2-outline' />
             <Text style={styles.caption}>{PostedTime(data.posted_on)}</Text>
           </View>
-          <View>
-            <Text style={styles.caption}>{data.comments} Comments</Text>
-          </View>
+          {data.comments > 0 &&
+            <View>
+              <Text style={styles.caption}>{data.comments} {Lang('comment.comments')}</Text>
+            </View>
+          }
         </View>
         <Divider style={styles.divider} />
       </View>
@@ -70,7 +73,7 @@ const themedStyle = StyleService.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  divider:{
+  divider: {
     marginTop: 15,
     marginBottom: 15
   }

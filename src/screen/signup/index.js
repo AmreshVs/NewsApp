@@ -19,6 +19,7 @@ import { useAxios } from '@hooks';
 import { CityStateData } from '@const/cityState';
 import TopNav from '@comp/topNav';
 import { setUserData } from '@redux/actions/commonActions';
+import { getToken } from '@common/firebaseCommon';
 
 const Signup = (props) => {
 
@@ -100,7 +101,7 @@ const Signup = (props) => {
       if (validateOtp() === true) {
         setLoading(true);
         // API call based on OTP and Non OTP
-        const response = otp.length > 0 ? await useAxios(SIGNUP, { fullname: fullname, citystate: cityState, mobile: mobile, otp: otp }) : await useAxios(SIGNUP, { fullname: fullname, citystate: cityState, mobile: mobile, autoOtpHash: props.autoOtpHash });
+        const response = otp.length > 0 ? await useAxios(SIGNUP, { fullname: fullname, citystate: cityState, mobile: mobile, otp: otp, notification_token: await getToken() }) : await useAxios(SIGNUP, { fullname: fullname, citystate: cityState, mobile: mobile, autoOtpHash: props.autoOtpHash });
         setOtpClick(true);
         snackBar(response.message);
         setLoading(false);

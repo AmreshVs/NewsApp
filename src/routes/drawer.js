@@ -8,8 +8,10 @@ import Ripple from 'react-native-material-ripple';
 const { Navigator, Screen } = createDrawerNavigator();
 import Home from '@screen/home';
 import Favourites from '@screen/favourites';
+import NewsWithCategory from '@screen/newsWithCategory';
 import store from '@redux/stores'
 import { toggleTheme } from '@redux/actions/commonActions';
+import Lang from '@lang';
 
 const HomeIcon = (props) => (
   <Icon {...props} name='home-outline' />
@@ -17,6 +19,10 @@ const HomeIcon = (props) => (
 
 const BookmarkIcon = (props) => (
   <Icon {...props} name='bookmark-outline' />
+);
+
+const CategoriesIcon = (props) => (
+  <Icon {...props} name='list-outline' />
 );
 
 const header = ({ userData, theme }) => {
@@ -48,8 +54,9 @@ const DrawerContent = ({ navigation, state }) => {
       header={connect(mapStateToProps)(header)}
       selectedIndex={new IndexPath(state.index)}
       onSelect={index => navigation.navigate(state.routeNames[index.row])}>
-      <DrawerItem title='Home' accessoryLeft={HomeIcon} />
-      <DrawerItem title='Saved' accessoryLeft={BookmarkIcon} />
+      <DrawerItem title={Lang('nav.home')} accessoryLeft={HomeIcon} />
+      <DrawerItem title={Lang('nav.categories')} accessoryLeft={CategoriesIcon} />
+      <DrawerItem title={Lang('nav.saved')} accessoryLeft={BookmarkIcon} />
     </Drawer>
   );
 }
@@ -57,6 +64,7 @@ const DrawerContent = ({ navigation, state }) => {
 export const DrawerNavigator = () => (
   <Navigator drawerContent={props => <DrawerContent {...props} />}>
     <Screen name="Home" component={Home} />
+    <Screen name='Categories' component={NewsWithCategory} />
     <Screen name='Favourites' component={Favourites} />
   </Navigator>
 );

@@ -30,7 +30,7 @@ const TodayPdf = () => {
   return (
     <>
       <View style={styles.headingContainer}>
-        <Text category='h6' style={styles.heading}>{Lang('home.today_pdf')}</Text>
+        <Text category='h6' style={styles.heading}>{Lang('home.latest_pdf')}</Text>
         <Ripple onPress={() => navigation.navigate('AllPdfs')}>
           <Text category='h6' style={styles.more}>{Lang('home.more')}</Text>
         </Ripple>

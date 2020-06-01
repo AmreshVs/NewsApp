@@ -8,6 +8,7 @@ import { useAxios } from '@hooks';
 import { GET_FAV_ITEMS } from '@api';
 import Loader from '@comp/loader';
 import DarwerNav from '@comp/drawerNav';
+import Lang from '@lang';
 
 const Favourites = ({ navigation }) => {
 
@@ -16,7 +17,7 @@ const Favourites = ({ navigation }) => {
     data: [],
     refresh: false,
     page: 1,
-    loading: false,
+    loading: true,
     pdf: []
   });
 
@@ -46,6 +47,7 @@ const Favourites = ({ navigation }) => {
   }
 
   const handleRefresh = async () => {
+    setState({ ...state, loading: true });
     const response = await useAxios({ ...GET_FAV_ITEMS, url: `${GET_FAV_ITEMS.url}?page=1&size=10` });
     let filterPdf = response.data.filter((item) => item.type === 'pdf');
     setState({ ...state, data: response.data, loading: false, pdf: filterPdf });
@@ -65,7 +67,7 @@ const Favourites = ({ navigation }) => {
           <View style={styles.container}>
             <DarwerNav rightAction={RefreshIcon} />
             <View style={styles.noData}>
-              <Text>No Saved News!</Text>
+              <Text>{Lang('common.no_saved')}</Text>
             </View>
           </View>
           :

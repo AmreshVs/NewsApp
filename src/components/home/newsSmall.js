@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
 
 import PostedTime from '@common/postedTime';
+import Lang from '@lang';
 
 const NewsSmall = ({ data }) => {
 
@@ -31,9 +32,11 @@ const NewsSmall = ({ data }) => {
                 <Icon style={styles.icon} fill={styles.icon.color} name='globe-2-outline' />
                 <Text style={styles.caption}>{PostedTime(data.posted_on)}</Text>
               </View>
-              <View>
-                <Text style={styles.caption}>{data.comments} Comments</Text>
-              </View>
+              {data.comments > 0 &&
+                <View>
+                  <Text style={styles.caption}>{data.comments} {Lang('comment.comments')}</Text>
+                </View>
+              }
             </View>
           </View>
         </View>

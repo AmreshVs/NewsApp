@@ -14,7 +14,7 @@ import TopNav from '@comp/topNav';
 const NewsWithCategory = () => {
 
   let route = useRoute();
-  let brand_id = route.params.brand_id;
+  let brand_id = route.params !== undefined ? route.params.brand_id : '';
   const styles = useStyleSheet(themedStyle);
   let tabView = React.useRef(null);
 

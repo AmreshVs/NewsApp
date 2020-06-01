@@ -1,4 +1,8 @@
 {
+  "common":{
+    "no_data": "No Data to load!",
+    "no_saved": "No Saved News!"
+  },
   "login": {
     "welcome_back": "Welcome Back!",
     "caption": "Login to your existing account to explore benefits",
@@ -20,9 +24,10 @@
     "have_account": "Already have an account?"
   },
   "home":{
-    "today_pdf": "Today's PDF",
+    "latest_pdf": "Latest PDF",
     "latest_news": "Latest News",
-    "more": "more"
+    "more": "more",
+    "live": "live"
   },
   "comment": {
     "comments": "Comments",
@@ -31,5 +36,14 @@
     "add": "Add",
     "reply": "Reply",
     "cancel": "Cancel"
+  },
+  "validation":{
+    "enter_mobile": "Enter a mobile number",
+    "enter_valid_mobile": "Enter a valid mobile number"
+  },
+  "nav":{
+    "home": "Home",
+    "categories": "News By Category",
+    "saved": "Saved"
   }
 }

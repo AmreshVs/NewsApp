@@ -17,6 +17,7 @@ import mobileValidation from '@common/mobileValidation';
 import { useAxios } from '@hooks';
 import { LOGIN } from '@api';
 import { setUserData } from '@redux/actions/commonActions';
+import { getToken } from '@common/firebaseCommon';
 
 const Login = (props) => {
 
@@ -33,23 +34,23 @@ const Login = (props) => {
 
   const handleOtpSend = async () => {
     // Validate the mobile number and then proceed
-    if(mobileValidation(mobile)){
+    if (mobileValidation(mobile)) {
       setLoading(true);
       let otp = `${state.input1}${state.input2}${state.input3}${state.input4}`;
       // API call based on OTP
-      let response = otp.length > 0 ? await useAxios(LOGIN, {mobile: mobile, otp: otp}) : await useAxios(LOGIN, {mobile: mobile, autoOtpHash: props.autoOtpHash});
+      let response = otp.length > 0 ? await useAxios(LOGIN, { mobile: mobile, otp: otp, notification_token: await getToken() }) : await useAxios(LOGIN, { mobile: mobile, autoOtpHash: props.autoOtpHash });
       setLoading(false);
       setOtpClick(true);
-      if(response.message !== 'Login Success'){
-        snackBar(response.message);  
+      if (response.message !== 'Login Success') {
+        snackBar(response.message);
       }
       // If login Success save it to store and save on Asyncstorage for later login
-      if(response.message === 'Login Success'){
+      if (response.message === 'Login Success') {
         await props.setUserData(response.data);
         await AsyncStorage.setItem('@ValarTamil:userData', JSON.stringify(response.data));
         axios.defaults.headers.common['Authorization'] = response.data.token;
       }
-      if(otp.length > 0 && response.message === 'Login Success'){
+      if (otp.length > 0 && response.message === 'Login Success') {
         props.navigation.navigate('Main');
       }
     }
@@ -60,25 +61,25 @@ const Login = (props) => {
   }
 
   const handleSetOtp = (id, text) => {
-    setState({ ...state, ['input' + id]: text});
+    setState({ ...state, ['input' + id]: text });
   }
 
   // Add Country code to first number charcter
   const handleMobileText = (text) => {
-    if(text.length === 1 && !text.includes('+')){
+    if (text.length === 1 && !text.includes('+')) {
       setMobile('+91' + text);
     }
-    else if(mobile.length < 10 && otpClick === true){
+    else if (mobile.length < 10 && otpClick === true) {
       setOtpClick(false);
     }
-    else{
+    else {
       setMobile(text);
     }
   }
 
   const LoadingIndicator = (props) => (
     <View style={[props.style, styles.indicator]}>
-      <Spinner status='basic' size='small'/>
+      <Spinner status='basic' size='small' />
     </View>
   );
 
@@ -92,13 +93,13 @@ const Login = (props) => {
         {/* Mobile */}
         <RoundedTextBox size='large' value={mobile} onChangeText={handleMobileText} placeholder={Lang('login.mobile_number')} keyboardType='phone-pad' accessory='left' icon='smartphone-outline' />
         {/* OTP */}
-        {otpClick ? 
+        {otpClick ?
           <>
             <OtpInput value={state} setAutoOtp={handleAutoOtp} setOtp={handleSetOtp} disabled={!otpClick} />
-            <ResendOtp mobile={mobile} /> 
+            <ResendOtp mobile={mobile} />
           </>
-        : null}
-        <Button style={[styles.button, {marginTop: !otpClick ? 20 : 5}]} appearance='filled' onPress={handleOtpSend} disabled={mobile.length >= 10 ? false : true} accessoryLeft={loading === true ? LoadingIndicator : null}>
+          : null}
+        <Button style={[styles.button, { marginTop: !otpClick ? 20 : 5 }]} appearance='filled' onPress={handleOtpSend} disabled={mobile.length >= 10 ? false : true} accessoryLeft={loading === true ? LoadingIndicator : null}>
           {!otpClick ? Lang('login.get_otp') : Lang('login.login')}
         </Button>
       </View>

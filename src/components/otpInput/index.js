@@ -9,16 +9,16 @@ const OtpInput = (props) => {
     RNOtpVerify.getOtp()
       .then(() => {
         RNOtpVerify.addListener((message) => {
-          try{
-            if(message){
+          try {
+            if (message) {
               const messageWithOtp = message.split(' ');
               const otp = (messageWithOtp[1].split(' ')[0]).split('');
-              if(otp.length === 4){
+              if (otp.length === 4) {
                 props.setAutoOtp(otp);
               }
             }
           }
-          catch(error){
+          catch (error) {
             // console.log('error', error);
           }
         })
@@ -27,9 +27,9 @@ const OtpInput = (props) => {
         // console.log(error);
       })
 
-      return () => {
-        RNOtpVerify.removeListener();
-      }
+    return () => {
+      RNOtpVerify.removeListener();
+    }
   }, [])
 
   const input1 = React.useRef(null);
@@ -39,15 +39,15 @@ const OtpInput = (props) => {
   const styles = useStyleSheet(themedStyle);
 
   const handleInput = (e, id) => {
-    if(e.nativeEvent.text !== ''){
-      if(id !== 4){
-        let inputRef = eval('input' + (id + 1 ));
+    if (e.nativeEvent.text !== '') {
+      if (id !== 4) {
+        let inputRef = eval('input' + (id + 1));
         inputRef.current.focus();
       }
     }
-    else{
-      if(id !== 1){
-        let inputRef = eval('input' + (id - 1 ));
+    else {
+      if (id !== 1) {
+        let inputRef = eval('input' + (id - 1));
         inputRef.current.focus();
       }
     }
@@ -57,7 +57,7 @@ const OtpInput = (props) => {
     props.setOtp(id, text);
   }
 
-  return(
+  return (
     <View style={styles.container}>
       <Input style={styles.input} value={props.value.input1} placeholder='0' keyboardType='number-pad' ref={input1} maxLength={1} onChange={(e) => handleInput(e, 1)} onChangeText={(text) => handleInputText(text, 1)} size="large" disabled={props.disabled} />
       <Input style={styles.input} value={props.value.input2} placeholder='0' keyboardType='number-pad' ref={input2} maxLength={1} onChange={(e) => handleInput(e, 2)} onChangeText={(text) => handleInputText(text, 2)} size="large" disabled={props.disabled} />
@@ -70,14 +70,14 @@ const OtpInput = (props) => {
 export default OtpInput;
 
 const themedStyle = StyleService.create({
-  container:{
+  container: {
     width: '100%',
     paddingTop: 20,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center'
   },
-  input:{
+  input: {
     width: 50,
     marginHorizontal: 10,
   },

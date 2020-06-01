@@ -6,6 +6,7 @@ import Ripple from 'react-native-material-ripple';
 
 import VideoPlayer from '@comp/video';
 import PostedTime from '@common/postedTime';
+import Lang from '@lang';
 
 const VideoBig = ({ data }) => {
 
@@ -44,9 +45,11 @@ const VideoBig = ({ data }) => {
           <Icon style={styles.icon} fill={styles.icon.color} name='globe-2-outline' />
           <Text style={styles.caption}>{PostedTime(data.posted_on)}</Text>
         </View>
-        <View>
-          <Text style={styles.caption}>{data.comments} Comments</Text>
-        </View>
+        {data.comments > 0 &&
+          <View>
+            <Text style={styles.caption}>{data.comments} {Lang('comment.comments')}</Text>
+          </View>
+        }
       </View>
       <Divider style={styles.divider} />
     </View>

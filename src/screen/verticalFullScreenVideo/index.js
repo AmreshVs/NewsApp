@@ -5,7 +5,7 @@ import { useStyleSheet } from '@ui-kitten/components';
 import VideoPlayer from '@comp/video';
 import themedStyle from './style';
 
-const LiveVideo = ({route}) => {
+const LiveVideo = ({ route }) => {
 
   const url = route.params.url;
   const styles = useStyleSheet(themedStyle);
