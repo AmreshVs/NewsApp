@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Image, View, ScrollView } from 'react-native';
 import { useStyleSheet, Layout, Text, Icon } from '@ui-kitten/components';
-import HTMLView from 'react-native-htmlview';
 import { useRoute } from '@react-navigation/native';
 import Ripple from 'react-native-material-ripple';
+import HTML from 'react-native-render-html';
 
 import themedStyle from './style';
 import TopNav from '@comp/topNav';
@@ -14,7 +14,7 @@ import { GET_NEWS_DETAIL, GET_VIDEO_DETAIL, ADD_FAVOURITES } from '@api';
 import VideoPlayer from '@comp/video';
 import Loader from '@comp/loader';
 
-const NewsDetail = ({userData, theme}) => {
+const NewsDetail = ({ userData, theme }) => {
 
   const styles = useStyleSheet(themedStyle);
   const route = useRoute();
@@ -45,7 +45,7 @@ const NewsDetail = ({userData, theme}) => {
   }
 
   const RightIcon = (props) => {
-    return(
+    return (
       <Ripple onPress={handleFavourite}>
         <Icon style={styles.icon} {...props} name={favourite === false ? 'bookmark-outline' : 'bookmark'} />
       </Ripple>
@@ -58,12 +58,16 @@ const NewsDetail = ({userData, theme}) => {
     )
   }
 
+  const renderers = {
+    img: (attr) => <Image source={{ uri: attr.src }} style={styles.image} />
+  }
+
   const RenderElement = () => {
     return (
       <>
         {data.length <= 0
           ?
-            <Loader/>
+          <Loader />
           :
           <Layout level='1' style={styles.root}>
             <ScrollView>
@@ -78,9 +82,9 @@ const NewsDetail = ({userData, theme}) => {
                 <Text category='h6' style={styles.heading}>{data.title}</Text>
                 {type === 'videos'
                   ?
-                    <Text>{data.content}</Text>
+                  <Text>{data.content}</Text>
                   :
-                    <HTMLView value={data.content} stylesheet={theme === 'dark' ? { p: { color: '#FFF' } } : null} />
+                  <HTML html={data.content} renderers={renderers} tagsStyles={theme === 'dark' ? { p: { color: '#FFF', marginBottom: 10 } } : {}} />
                 }
               </View>
               <Comment data={data.comments} post_id={data.id} type={type} />

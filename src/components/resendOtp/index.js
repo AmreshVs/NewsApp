@@ -23,7 +23,7 @@ const ResendOtp = (props) => {
     <View style={styles.countDownContainer}>
       {resend === false ?
         <>
-          <Text>{Lang('login.resend_otp_in')} </Text>
+          <Text>{Lang('login.resend_in')} </Text>
           <CountDown
             until={60}
             running={!resend}

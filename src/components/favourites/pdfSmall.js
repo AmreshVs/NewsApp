@@ -11,7 +11,7 @@ const PdfSmall = ({ data, handleFavourite }) => {
   const styles = useStyleSheet(themedStyle);
 
   const handleNavigation = () => {
-    navigation.navigate('PDFViewer', { url: data.url });
+    navigation.navigate('PDFViewer', { url: data.url, id: data.id });
   }
 
   const FavouritesIcon = (props) => {

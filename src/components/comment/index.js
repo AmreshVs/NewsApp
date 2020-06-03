@@ -32,7 +32,7 @@ const Comment = ({ data, user_id, post_id, type }) => {
       snackBar('Comment cannot be empty!');
       return false;
     }
-    let response = await useAxios(ADD_COMMENT, { user_id: user_id, comment: comment, comment_type: comment_type, reply_to: 'post', reply_id: post_id, is_verified: 0 });
+    let response = await useAxios(ADD_COMMENT, { user_id: user_id, comment: comment, comment_type: 'post', reply_to: comment_type, reply_id: post_id, is_verified: 0 });
     snackBar(response.message);
     setComment('');
   }
@@ -42,7 +42,7 @@ const Comment = ({ data, user_id, post_id, type }) => {
       snackBar('Comment cannot be empty!');
       return false;
     }
-    let response = await useAxios(ADD_COMMENT, { user_id: user_id, comment: innerComment, comment_type: comment_type, reply_to: 'comment', reply_id: index, is_verified: 0 });
+    let response = await useAxios(ADD_COMMENT, { user_id: user_id, comment: innerComment, comment_type: 'post', reply_to: 'comment', reply_id: index, is_verified: 0 });
     snackBar(response.message);
     setInnerComment('');
     setReply('');

@@ -6,8 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 const DarwerNav = (props) => {
 
   const navigation = useNavigation();
+
   const MenuIcon = (props) => (
-    <Icon {...props} style={[props.style, styles.icon]} name='menu-outline' onPress={() => navigation.openDrawer()} />
+    <Icon {...props} style={[props.style, styles.icon]} name={navigation.openDrawer === undefined ? 'arrow-back-outline' : 'menu-outline'} onPress={() => navigation.openDrawer === undefined ? navigation.goBack() : navigation.openDrawer()} />
   );
   return (
     <View style={styles.topNavContainer}>

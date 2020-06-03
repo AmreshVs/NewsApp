@@ -8,7 +8,7 @@ import { useAxios } from '@hooks';
 import { TOP_SECTION } from '@api';
 import Lang from '@lang';
 
-const TodayPdf = () => {
+const TodayPdf = ({ handleLive }) => {
 
   const navigation = useNavigation();
   const styles = useStyleSheet(themedStyle);
@@ -21,10 +21,11 @@ const TodayPdf = () => {
   const loadData = async () => {
     const response = await useAxios(TOP_SECTION);
     setData(response.todayPdf);
+    handleLive(response.liveVideo);
   }
 
-  const handleNavigate = (url) => {
-    navigation.navigate('PDFViewer', { url: url });
+  const handleNavigate = (id, url) => {
+    navigation.navigate('PDFViewer', { url: url, id: id });
   }
 
   return (
@@ -43,7 +44,7 @@ const TodayPdf = () => {
         <ScrollView horizontal={true}>
           {Object.keys(data).length > 0 && data.map((item) => {
             return (
-              <Ripple style={styles.container} onPress={() => handleNavigate(item.url)}>
+              <Ripple style={styles.container} onPress={() => handleNavigate(item.id, item.url)}>
                 <Image style={styles.image} source={{ uri: item.featured_img }} />
               </Ripple>
             )

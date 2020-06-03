@@ -9,6 +9,8 @@ const { Navigator, Screen } = createDrawerNavigator();
 import Home from '@screen/home';
 import Favourites from '@screen/favourites';
 import NewsWithCategory from '@screen/newsWithCategory';
+import Notifications from '@screen/notifications';
+import Profile from '@screen/profile';
 import store from '@redux/stores'
 import { toggleTheme } from '@redux/actions/commonActions';
 import Lang from '@lang';
@@ -23,6 +25,14 @@ const BookmarkIcon = (props) => (
 
 const CategoriesIcon = (props) => (
   <Icon {...props} name='list-outline' />
+);
+
+const NotificationIcon = (props) => (
+  <Icon {...props} name='bell-outline' />
+);
+
+const ProfileIcon = (props) => (
+  <Icon {...props} name='person-outline' />
 );
 
 const header = ({ userData, theme }) => {
@@ -56,7 +66,9 @@ const DrawerContent = ({ navigation, state }) => {
       onSelect={index => navigation.navigate(state.routeNames[index.row])}>
       <DrawerItem title={Lang('nav.home')} accessoryLeft={HomeIcon} />
       <DrawerItem title={Lang('nav.categories')} accessoryLeft={CategoriesIcon} />
+      <DrawerItem title={Lang('nav.notifications')} accessoryLeft={NotificationIcon} />
       <DrawerItem title={Lang('nav.saved')} accessoryLeft={BookmarkIcon} />
+      <DrawerItem title={Lang('nav.profile')} accessoryLeft={ProfileIcon} />
     </Drawer>
   );
 }
@@ -65,7 +77,9 @@ export const DrawerNavigator = () => (
   <Navigator drawerContent={props => <DrawerContent {...props} />}>
     <Screen name="Home" component={Home} />
     <Screen name='Categories' component={NewsWithCategory} />
+    <Screen name='Notifications' component={Notifications} />
     <Screen name='Favourites' component={Favourites} />
+    <Screen name='Profile' component={Profile} />
   </Navigator>
 );
 

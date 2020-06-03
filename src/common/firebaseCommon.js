@@ -47,10 +47,10 @@ export const NotificationListeners = () => {
 }
 
 export const getToken = async () => {
-  console.log(await messaging().getToken());
+  return await messaging().getToken();
 }
 
-const handleNotification = (data) => {
+export const handleNotification = (data) => {
   if(data.type === 'news'){
     if(data.display === 'detail'){
       navigate('NewsDetail', { id: data.id, type: data.type });
@@ -67,8 +67,8 @@ const handleNotification = (data) => {
   }
   
   if(data.type === 'pdf'){
-    if(data.display === 'detail'){
-      navigate('PDFViewer', { url: data.url });
+    if(data.display === 'full'){
+      navigate('PDFViewer', { url: data.url, id: data.id });
     }
   }
 }

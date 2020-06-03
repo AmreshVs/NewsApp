@@ -5,7 +5,7 @@ const PostedTime = (posted_date) => {
     return 'now';
   }
   else{
-    return moment(posted_date).fromNow()
+    return moment(posted_date).fromNow();
   }
 }
 

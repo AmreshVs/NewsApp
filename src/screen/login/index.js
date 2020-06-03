@@ -15,7 +15,7 @@ import RoundedTextBox from '@comp/roundedTextBox';
 import snackBar from '@common/snackBar';
 import mobileValidation from '@common/mobileValidation';
 import { useAxios } from '@hooks';
-import { LOGIN } from '@api';
+import { LOGIN, SUB_TO_TOPIC } from '@api';
 import { setUserData } from '@redux/actions/commonActions';
 import { getToken } from '@common/firebaseCommon';
 
@@ -37,8 +37,12 @@ const Login = (props) => {
     if (mobileValidation(mobile)) {
       setLoading(true);
       let otp = `${state.input1}${state.input2}${state.input3}${state.input4}`;
+      let notification_token = await getToken();
       // API call based on OTP
-      let response = otp.length > 0 ? await useAxios(LOGIN, { mobile: mobile, otp: otp, notification_token: await getToken() }) : await useAxios(LOGIN, { mobile: mobile, autoOtpHash: props.autoOtpHash });
+      let response = otp.length > 0 ? await useAxios(LOGIN, { mobile: mobile, otp: otp, notification_token: notification_token }) : await useAxios(LOGIN, { mobile: mobile, autoOtpHash: props.autoOtpHash });
+      if(otp.length > 0){
+        await useAxios({ ...SUB_TO_TOPIC, url: `${SUB_TO_TOPIC.url}?token=${notification_token}` });
+      }
       setLoading(false);
       setOtpClick(true);
       if (response.message !== 'Login Success') {
@@ -51,7 +55,7 @@ const Login = (props) => {
         axios.defaults.headers.common['Authorization'] = response.data.token;
       }
       if (otp.length > 0 && response.message === 'Login Success') {
-        props.navigation.navigate('Main');
+        props.navigation.navigate('Root');
       }
     }
   }

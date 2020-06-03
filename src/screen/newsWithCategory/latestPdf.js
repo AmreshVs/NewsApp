@@ -23,8 +23,8 @@ const LatestPdf = ({ id }) => {
     setData(response.data);
   }
 
-  const handleNavigate = (url) => {
-    navigation.navigate('PDFViewer', { url: url });
+  const handleNavigate = (id, url) => {
+    navigation.navigate('PDFViewer', { url: url, id: id });
   }
 
   return (
@@ -43,7 +43,7 @@ const LatestPdf = ({ id }) => {
         <ScrollView horizontal={true} nestedScrollEnabled={true}>
           {Object.keys(data).length > 0 && data.map((item) => {
             return (
-              <Ripple style={styles.container} onPress={() => handleNavigate(item.url)}>
+              <Ripple style={styles.container} onPress={() => handleNavigate(item.id, item.url)}>
                 <Image style={styles.image} source={{ uri: item.featured_img }} />
               </Ripple>
             )

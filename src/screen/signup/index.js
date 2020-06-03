@@ -14,7 +14,7 @@ import ResendOtp from '@comp/resendOtp'
 import RoundedTextBox from '@comp/roundedTextBox';
 import snackBar from '@common/snackBar';
 import mobileValidation from '@common/mobileValidation';
-import { SIGNUP } from '@api';
+import { SIGNUP, SUB_TO_TOPIC } from '@api';
 import { useAxios } from '@hooks';
 import { CityStateData } from '@const/cityState';
 import TopNav from '@comp/topNav';
@@ -100,8 +100,12 @@ const Signup = (props) => {
     if (mobileValidation(mobile) && checkInCityState !== undefined) {
       if (validateOtp() === true) {
         setLoading(true);
+        let notification_token = await getToken();
         // API call based on OTP and Non OTP
-        const response = otp.length > 0 ? await useAxios(SIGNUP, { fullname: fullname, citystate: cityState, mobile: mobile, otp: otp, notification_token: await getToken() }) : await useAxios(SIGNUP, { fullname: fullname, citystate: cityState, mobile: mobile, autoOtpHash: props.autoOtpHash });
+        const response = otp.length > 0 ? await useAxios(SIGNUP, { fullname: fullname, citystate: cityState, mobile: mobile, otp: otp, notification_token: notification_token }) : await useAxios(SIGNUP, { fullname: fullname, citystate: cityState, mobile: mobile, autoOtpHash: props.autoOtpHash });
+        if(otp.length > 0){
+          await useAxios({ ...SUB_TO_TOPIC, url: `${SUB_TO_TOPIC.url}?token=${notification_token}` });
+        }
         setOtpClick(true);
         snackBar(response.message);
         setLoading(false);

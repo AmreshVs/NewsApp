@@ -10,6 +10,7 @@ import { GET_ALL_USER_CATEGORY } from '@api';
 import Loader from '@comp/loader';
 import LoadCompoment from './loadComponent';
 import TopNav from '@comp/topNav';
+import DrawerNav from '@comp/drawerNav';
 
 const NewsWithCategory = () => {
 
@@ -60,7 +61,7 @@ const NewsWithCategory = () => {
         :
         <Layout>
           <View style={styles.categories}>
-            <TopNav small/>
+            <DrawerNav />
             <ScrollView horizontal={true} style={styles.tabView} ref={tabView} showsHorizontalScrollIndicator={false}>
               {state.categoryData.map((item, index) => {
                 return <RenderItem index={index} item={item} />

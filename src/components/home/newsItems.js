@@ -1,6 +1,7 @@
 import React from 'react';
-import { Text } from '@ui-kitten/components';
+import { Text, Icon } from '@ui-kitten/components';
 import { StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import NewsBig from '@comp/home/newsBig';
 import NewsSmall from '@comp/home/newsSmall';
@@ -14,11 +15,23 @@ const NewsItems = ({ item, index }) => {
 
   const Top = () => {
     if (index === 0) {
+
+      const navigation = useNavigation();
+      const NotificationIcon = (props) => {
+        return <Icon {...props} name='bell-outline' onPress={() => navigation.navigate('Notifications')} />
+      }
+
+      const [live, setLive] = React.useState('');
+
+      const handleLive = (data) => {
+        setLive(data);
+      }
+
       return (
         <>
-          <DrawerNav/>
-          <TopSection />
-          <TodayPdf />
+          <DrawerNav rightAction={NotificationIcon} />
+          <TopSection live={live} />
+          <TodayPdf handleLive={handleLive} />
           <Text category='h6' style={styles.heading}>{Lang('home.latest_news')}</Text>
         </>
       )

@@ -33,6 +33,7 @@ const themedStyle = StyleService.create({
   },
   categories:{
     height: '13%',
+    justifyContent: 'center'
   },
   content:{
     height: '87%'

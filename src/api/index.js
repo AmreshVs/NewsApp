@@ -75,3 +75,36 @@ export const NEWS_BY_CATEGORY = {
   url: `${API_URL}/news-by-category`,
   method: 'GET'
 }
+
+export const LIST_NOTIFICATIONS = {
+  url: `${API_URL}/list-notifications`,
+  method: 'GET'
+}
+
+export const VIEW_NOTIFICATION = {
+  url: `${API_URL}/view-notification`,
+  method: 'GET'
+}
+
+export const VIEW_PROFILE = {
+  url: `${API_URL}/view-profile`,
+  method: 'GET'
+}
+
+export const EDIT_PROFILE = {
+  url: `${API_URL}/edit-profile`,
+  method: 'POST',
+  headers:{
+    'Content-Type' : 'application/json'
+  }
+}
+
+export const GET_USER_PDF = {
+  url: `${API_URL}/get-user-pdf`,
+  method: 'GET'
+}
+
+export const SUB_TO_TOPIC = {
+  url: `${API_URL}/sub-to-topic`,
+  method: 'POST'
+}

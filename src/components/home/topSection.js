@@ -7,13 +7,13 @@ import { useNavigation } from '@react-navigation/core';
 
 import Lang from '@lang';
 
-const TopSection = ({ theme }) => {
+const TopSection = ({ theme, live }) => {
   
   const styles = useStyleSheet(themedStyle);
   const navigation = useNavigation();
 
   const handleVideo = () => {
-    navigation.navigate('VerticalFullScreenVideo', { url: 'http://www.exit109.com/~dnn/clips/RW20seconds_1.mp4' })
+    navigation.navigate('VerticalFullScreenVideo', { url: live })
   }
 
   return (

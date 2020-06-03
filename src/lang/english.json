@@ -27,7 +27,7 @@
     "latest_pdf": "Latest PDF",
     "latest_news": "Latest News",
     "more": "more",
-    "live": "live"
+    "live": "LIVE"
   },
   "comment": {
     "comments": "Comments",
@@ -44,6 +44,14 @@
   "nav":{
     "home": "Home",
     "categories": "News By Category",
-    "saved": "Saved"
+    "saved": "Saved",
+    "notifications": "Notifications",
+    "profile": "Profile"
+  },
+  "profile":{
+    "account_created": "Account created on",
+    "unread_notifications": "Unread Notifications",
+    "saved_news": "Saved News",
+    "logout": "Logout"
   }
 }

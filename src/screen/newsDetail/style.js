@@ -39,6 +39,12 @@ const themedStyle = StyleService.create({
   icon:{
     width: 25,
     height: 25
+  },
+  image:{
+    width: '100%',
+    height: 300,
+    maxHeight: 300,
+    resizeMode: 'contain'
   }
 });
 
